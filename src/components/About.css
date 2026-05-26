@@ -1,0 +1,89 @@
+.about {
+  padding: 80px 0;
+  background-color: var(--color-light-gray);
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.about-image-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.blob-shape {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-dark-brown);
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  z-index: 1;
+  top: -10px;
+  left: -10px;
+  animation: blob-bounce 10s infinite alternate;
+}
+
+@keyframes blob-bounce {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  100% { border-radius: 60% 40% 30% 70% / 60% 50% 40% 50%; }
+}
+
+.about-image {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 10px;
+  /* Applying a slightly irregular shape to match the blob aesthetic */
+  clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+  transition: transform 0.3s ease;
+}
+
+.about-image:hover {
+  transform: scale(1.03);
+}
+
+.about-content {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-dark-brown);
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.about-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+  .about-container {
+    flex-direction: column;
+  }
+  
+  .about-content {
+    text-align: center;
+  }
+  
+  .blob-shape {
+    display: none;
+  }
+  
+  .about-image {
+    clip-path: none;
+    border-radius: 20px;
+  }
+}

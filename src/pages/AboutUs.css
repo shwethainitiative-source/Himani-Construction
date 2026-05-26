@@ -1,0 +1,197 @@
+.page-header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/cta_building_neww.jpg');
+  background-size: cover;
+  background-position: center;
+  color: var(--color-white);
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  color: var(--color-yellow);
+}
+
+.page-header p {
+  color: var(--color-white);
+  font-size: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.about-story {
+  padding: 80px 0;
+}
+
+.about-story-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-content h2 {
+  font-size: 2.5rem;
+  color: var(--color-dark-brown);
+  margin-bottom: 20px;
+}
+
+.story-content p {
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+
+.mission-vision {
+  padding: 80px 0;
+  background-color: var(--color-light-gray);
+}
+
+.mv-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.mv-card {
+  padding: 50px;
+  border-radius: 12px;
+  color: var(--color-white);
+}
+
+.mission-card {
+  background-color: var(--color-sky-blue);
+}
+
+.vision-card {
+  background-color: var(--color-dark-brown);
+}
+
+.mv-card h3 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--color-yellow);
+}
+
+.mv-card p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.core-values {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--color-dark-brown);
+  margin-bottom: 50px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 40px 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+  border-color: var(--color-beige);
+}
+
+.value-icon {
+  font-size: 3rem;
+  color: var(--color-sky-blue);
+  margin-bottom: 20px;
+}
+
+.value-card h4 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: var(--color-dark-brown);
+}
+
+.value-card p {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.team {
+  padding: 80px 0;
+  background-color: var(--color-light-gray);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.team-card {
+  text-align: center;
+}
+
+.team-profile-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ddd;
+  margin: 0 auto;
+  display: block;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.team-info {
+  padding-top: 15px;
+}
+
+.team-info h4 {
+  font-size: 1.4rem;
+  color: var(--color-dark-brown);
+  margin-bottom: 5px;
+}
+
+.team-info p {
+  color: var(--color-sky-blue);
+  font-weight: 500;
+}
+
+@media (max-width: 992px) {
+
+  .mv-container {
+    grid-template-columns: 1fr;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .values-grid,
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}

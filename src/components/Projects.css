@@ -1,0 +1,127 @@
+.projects {
+  background-color: white;
+  padding: 80px 0;
+  text-align: center;
+  overflow: hidden;
+  /* Prevent horizontal scroll on body */
+}
+
+.projects-subtitle {
+  color: var(--color-red);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.projects-title {
+  color: var(--color-dark-brown);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 40px;
+}
+
+.coverflow-wrapper {
+  width: 100%;
+  padding: 40px 0;
+  cursor: grab;
+  /* Prevent text selection when dragging */
+  user-select: none;
+  touch-action: pan-y;
+  /* allow vertical scroll, capture horizontal */
+}
+
+.coverflow-wrapper:active {
+  cursor: grabbing;
+}
+
+.coverflow-track {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coverflow-card {
+  position: absolute;
+  width: 380px;
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    z-index 0.6s;
+  will-change: transform, opacity;
+  background-color: var(--color-dark-brown);
+}
+
+.coverflow-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  /* Prevents ghost dragging of images */
+  display: block;
+}
+
+.coverflow-blur-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(55, 26, 16, 0.6);
+  /* Warm dark overlay */
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.coverflow-text-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  padding: 40px 25px 25px;
+  text-align: left;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.coverflow-text-overlay h3 {
+  color: var(--color-white);
+  font-size: 1.6rem;
+  margin: 0;
+  transform: translateY(10px);
+  transition: transform 0.6s ease;
+}
+
+.coverflow-card.active .coverflow-text-overlay h3 {
+  transform: translateY(0);
+  color: var(--color-yellow);
+}
+
+.coverflow-card.active {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 992px) {
+  .coverflow-card {
+    width: 320px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .coverflow-card {
+    width: 260px;
+    height: 350px;
+  }
+
+  .projects-title {
+    font-size: 32px;
+  }
+}

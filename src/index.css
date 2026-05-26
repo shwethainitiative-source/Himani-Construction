@@ -1,0 +1,55 @@
+:root {
+  --color-dark-brown: #371A10;
+  --color-sky-blue: #025981;
+  --color-beige: #FFCB96;
+  --color-yellow: #FFD700;
+  --color-red: #D32F2F;
+  --color-white: #FFFFFF;
+  --color-light-gray: #F5F5F5;
+  --color-text-main: #333333;
+  --color-text-muted: #666666;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--color-text-main);
+  background-color: var(--color-white);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* Common Container utility */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
