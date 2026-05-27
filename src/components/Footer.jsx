@@ -45,7 +45,7 @@ const Footer = () => {
           <h4 className="footer-heading">Contact Details</h4>
           <ul className="footer-links">
             <li>Bengaluru Himanai</li>
-            <li>Phone: 909090808989</li>
+            <li>Phone: +91 70192 45628, +91 86604 59395</li>
             <li>Email: himaniconstructionsandinterior@gmail.com</li>
           </ul>
         </div>

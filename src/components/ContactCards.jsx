@@ -9,7 +9,7 @@ const ContactCards = () => {
         <div className="contact-card">
           <Phone className="contact-icon" size={40} />
           <h3 className="contact-title">Call us</h3>
-          <p className="contact-detail">909090808989</p>
+          <p className="contact-detail">+91 70192 45628 / +91 86604 59395</p>
         </div>
 
         <div className="contact-card">

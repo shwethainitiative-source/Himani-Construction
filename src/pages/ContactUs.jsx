@@ -50,7 +50,7 @@ const ContactUs = () => {
                 <div className="info-icon">📞</div>
                 <div className="info-details">
                   <h4>Phone</h4>
-                  <p>+91 909090808989<br />+91 808080909090</p>
+                  <p>+91 70192 45628<br />+91 86604 59395</p>
                 </div>
               </div>
 
