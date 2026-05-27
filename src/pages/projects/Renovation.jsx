@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { db } from '../../utils/db';
 import './ProjectPages.css';
 
 const Renovation = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const filtered = db.getProjects().filter(p => p.category === 'renovation');
+    setProjects(filtered);
+  }, []);
+
   return (
     <main className="project-detail-page">
       {/* Header */}
@@ -23,16 +31,22 @@ const Renovation = () => {
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">
-        <div className="gallery-grid">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <div key={item} className="gallery-item">
-              <img src="/images/service-img-placeholder.png" alt={`Renovation Project ${item}`} />
-              <div className="gallery-overlay">
-                <h4>Heritage Restoration {item}</h4>
+        {projects.length === 0 ? (
+          <p style={{ textAlign: 'center', padding: '50px 0', color: 'var(--color-text-muted)', width: '100%', fontSize: '1.1rem' }}>
+            No renovation projects published yet. Check back soon!
+          </p>
+        ) : (
+          <div className="gallery-grid">
+            {projects.map((project) => (
+              <div key={project.id} className="gallery-item">
+                <img src={project.img} alt={project.title} />
+                <div className="gallery-overlay">
+                  <h4>{project.title}</h4>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Process */}

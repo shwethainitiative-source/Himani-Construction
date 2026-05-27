@@ -1,18 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { db } from '../utils/db';
 import './Projects.css';
 
-const projectsData = [
-  { id: 1, img: '/images/project_1.png', title: 'Modern Villa Design' },
-  { id: 2, img: '/images/project_2.png', title: 'Commercial Plaza' },
-  { id: 3, img: '/images/project_3.png', title: 'Interior Renovation' },
-  { id: 4, img: '/images/project_1.png', title: 'Luxury Apartments' },
-  { id: 5, img: '/images/project_2.png', title: 'Corporate Headquarters' },
-];
-
 const Projects = () => {
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [projectsData, setProjectsData] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
   const trackRef = useRef(null);
+
+  useEffect(() => {
+    const data = db.getProjects();
+    setProjectsData(data);
+    if (data.length > 0) {
+      // Set center active index
+      setActiveIndex(Math.min(2, Math.floor(data.length / 2)));
+    }
+  }, []);
 
   const handleDragStart = (e) => {
     if (e.type === 'touchstart') {
@@ -23,7 +26,7 @@ const Projects = () => {
   };
 
   const handleDragEnd = (e) => {
-    if (dragStartX === null) return;
+    if (dragStartX === null || projectsData.length === 0) return;
     
     let endX;
     if (e.type === 'touchend' || e.type === 'touchcancel') {
@@ -64,6 +67,20 @@ const Projects = () => {
     
     return `translateX(${direction * translateX}%) scale(${scale})`;
   };
+
+  if (projectsData.length === 0) {
+    return (
+      <section className="projects">
+        <div className="container">
+          <h4 className="projects-subtitle">OUR PROJECTS</h4>
+          <h2 className="projects-title">Our latest construction<br/>and design work</h2>
+          <p style={{ marginTop: '30px', color: 'var(--color-dark-brown)', opacity: 0.6 }}>
+            No projects published yet. Please check back later!
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="projects">

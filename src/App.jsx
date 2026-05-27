@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -14,10 +14,18 @@ import Commercial from './pages/projects/Commercial';
 import Interior from './pages/projects/Interior';
 import Renovation from './pages/projects/Renovation';
 
+// Admin Pages & Guards
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
   return (
     <div className="app">
-      <Header />
+      {!isAdminRoute && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutUs />} />
@@ -28,8 +36,19 @@ function App() {
         <Route path="/projects/commercial" element={<Commercial />} />
         <Route path="/projects/interior" element={<Interior />} />
         <Route path="/projects/renovation" element={<Renovation />} />
+        
+        {/* Admin Portal Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </div>
   );
 }
