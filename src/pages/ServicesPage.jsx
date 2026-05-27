@@ -87,7 +87,7 @@ const ServicesPage = () => {
           {/* Renovation */}
           <div className="service-row reverse" id="renovation">
             <div className="service-image-col">
-              <img src="/images/service-img-placeholder.png" alt="Renovation & Remodeling" />
+              <img src="/images/renovation.jpg" alt="Renovation & Remodeling" />
             </div>
             <div className="service-text-col">
               <h2>Renovation & Remodeling</h2>
