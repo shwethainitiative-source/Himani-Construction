@@ -33,13 +33,7 @@ const Commercial = () => {
         </div>
       </section>
 
-      {/* Overview */}
-      <section className="project-overview container">
-        <h2>Building the Foundations of Business</h2>
-        <div className="overview-text">
-          <p>Our commercial construction division specializes in creating environments that foster productivity, impress clients, and stand the test of time. From corporate headquarters and retail centers to specialized industrial facilities, we manage complex commercial projects with strict adherence to timelines, budgets, and safety regulations. We ensure your business experiences minimal downtime during the build phase.</p>
-        </div>
-      </section>
+
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">
