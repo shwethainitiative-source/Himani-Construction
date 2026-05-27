@@ -33,13 +33,6 @@ const Residential = () => {
         </div>
       </section>
 
-      {/* Overview */}
-      <section className="project-overview container">
-        <h2>Creating Homes, Not Just Houses</h2>
-        <div className="overview-text">
-          <p>At Himani Construction, residential building is where our passion truly shines. We understand that a home is more than just bricks and mortar; it's a sanctuary for you and your family. From modern smart-homes to classic architectural marvels, our team works closely with you to bring your exact vision to life, ensuring every corner reflects your personal style while adhering to the highest structural standards.</p>
-        </div>
-      </section>
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">

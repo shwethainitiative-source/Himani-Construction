@@ -33,13 +33,6 @@ const Renovation = () => {
         </div>
       </section>
 
-      {/* Overview */}
-      <section className="project-overview container">
-        <h2>Revitalize Your Property</h2>
-        <div className="overview-text">
-          <p>Remodeling requires a delicate touch and a deep understanding of existing structures. Whether you're looking to update a dated kitchen, add a new wing to your home, or completely gut and refurbish an old commercial property, our renovation experts handle the complexities of structural modifications flawlessly. We increase your property's value while preserving its unique character.</p>
-        </div>
-      </section>
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">

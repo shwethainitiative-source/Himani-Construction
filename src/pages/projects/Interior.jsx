@@ -33,13 +33,6 @@ const Interior = () => {
         </div>
       </section>
 
-      {/* Overview */}
-      <section className="project-overview container">
-        <h2>Aesthetics Meeting Functionality</h2>
-        <div className="overview-text">
-          <p>Our interior design team believes that the spaces we inhabit shape our daily lives. Whether it's a cozy residential living room or a dynamic corporate office, we blend color psychology, spatial planning, and premium material selection to create interiors that are both stunning and highly functional. We handle everything from conceptual mood boards to final furniture placement.</p>
-        </div>
-      </section>
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">
