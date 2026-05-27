@@ -45,7 +45,7 @@
 }
 
 .portfolio-gallery {
-  padding: 0 0 80px;
+  padding: 80px 0;
 }
 
 .gallery-grid {
@@ -208,5 +208,11 @@
 
   .process-steps::before {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .portfolio-gallery {
+    padding: 40px 0;
   }
 }
