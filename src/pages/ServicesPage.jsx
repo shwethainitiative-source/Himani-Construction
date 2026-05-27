@@ -70,7 +70,7 @@ const ServicesPage = () => {
           {/* Interior Design */}
           <div className="service-row" id="interior">
             <div className="service-image-col">
-              <img src="/images/service-img-placeholder.png" alt="Interior Design" />
+              <img src="/images/interior_design.jpg" alt="Interior Design" />
             </div>
             <div className="service-text-col">
               <h2>Interior Design</h2>
