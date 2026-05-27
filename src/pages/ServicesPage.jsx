@@ -36,7 +36,7 @@ const ServicesPage = () => {
           {/* Residential */}
           <div className="service-row" id="residential">
             <div className="service-image-col">
-              <img src="/images/service-img-placeholder.png" alt="Residential Construction" />
+              <img src="/images/residential_construction.jpg" alt="Residential Construction" />
             </div>
             <div className="service-text-col">
               <h2>Residential Construction</h2>
