@@ -58,7 +58,7 @@ const ContactUs = () => {
                 <div className="info-icon">✉️</div>
                 <div className="info-details">
                   <h4>Email</h4>
-                  <p>himaniconstruction@gmail.com<br />info@himaniconstruction.com</p>
+                  <p>himaniconstructionsandinterior@gmail.com<br /></p>
                 </div>
               </div>
             </div>

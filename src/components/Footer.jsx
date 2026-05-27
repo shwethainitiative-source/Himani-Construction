@@ -18,7 +18,7 @@ const Footer = () => {
             <a href="#" className="social-icon"><span>LI</span></a>
           </div>
         </div>
-        
+
         <div className="footer-col">
           <h4 className="footer-heading">Quick Links</h4>
           <ul className="footer-links">
@@ -30,7 +30,7 @@ const Footer = () => {
             <li><Link to="/contact">Contact Us</Link></li>
           </ul>
         </div>
-        
+
         <div className="footer-col">
           <h4 className="footer-heading">Services</h4>
           <ul className="footer-links">
@@ -40,17 +40,17 @@ const Footer = () => {
             <li><Link to="/projects/renovation">Renovation & Remodeling</Link></li>
           </ul>
         </div>
-        
+
         <div className="footer-col">
           <h4 className="footer-heading">Contact Details</h4>
           <ul className="footer-links">
             <li>Bengaluru Himanai</li>
             <li>Phone: 909090808989</li>
-            <li>Email: himaniconstruction@gmail.com</li>
+            <li>Email: himaniconstructionsandinterior@gmail.com</li>
           </ul>
         </div>
       </div>
-      
+
       <div className="footer-bottom">
         <div className="container">
           <p>&copy; {new Date().getFullYear()} Himani Construction & Interiors. All Rights Reserved.</p>
