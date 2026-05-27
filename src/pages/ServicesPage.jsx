@@ -53,7 +53,7 @@ const ServicesPage = () => {
           {/* Commercial */}
           <div className="service-row reverse" id="commercial">
             <div className="service-image-col">
-              <img src="/images/service-img-placeholder.png" alt="Commercial Construction" />
+              <img src="/images/commercial_construction.jpg" alt="Commercial Construction" />
             </div>
             <div className="service-text-col">
               <h2>Commercial Construction</h2>
