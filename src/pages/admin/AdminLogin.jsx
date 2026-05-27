@@ -1,36 +1,42 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../utils/db';
+import { supabaseService } from '../../utils/supabaseService';
 import './AdminLogin.css';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [forgotPasswordMsg, setForgotPasswordMsg] = useState('');
   const [showForgotModal, setShowForgotModal] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    setForgotPasswordMsg('');
+    setLoading(true);
 
     if (!email || !password) {
       setError('Please fill in all credentials.');
+      setLoading(false);
       return;
     }
 
-    const res = db.login(email, password);
-    if (res.success) {
-      navigate('/admin/dashboard');
-    } else {
-      setError(res.message || 'Incorrect email or password.');
+    try {
+      const res = await supabaseService.signIn(email, password);
+      if (res.success) {
+        navigate('/admin/dashboard');
+      } else {
+        setError(res.message || 'Incorrect email or password.');
+      }
+    } catch (err) {
+      setError('An unexpected error occurred during authorization. Please verify server connection.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleForgotPassword = () => {
-    // Reveal credential hint or support reset simulator
     setShowForgotModal(true);
   };
 
@@ -52,10 +58,11 @@ const AdminLogin = () => {
             <input
               type="email"
               id="email"
-              placeholder="admin@himaniconstruction.com"
+              placeholder="himaniconstructionsandinterior@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
@@ -68,17 +75,18 @@ const AdminLogin = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={loading}
             />
           </div>
 
           <div className="login-actions">
-            <button type="button" onClick={handleForgotPassword} className="forgot-pwd-btn">
+            <button type="button" onClick={handleForgotPassword} className="forgot-pwd-btn" disabled={loading}>
               Forgot Password?
             </button>
           </div>
 
-          <button type="submit" className="login-submit-btn">
-            Secure Sign In
+          <button type="submit" className="login-submit-btn" disabled={loading}>
+            {loading ? 'Authorizing Session...' : 'Secure Sign In'}
           </button>
         </form>
       </div>

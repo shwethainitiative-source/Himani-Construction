@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../../utils/db';
+import { supabaseService } from '../../utils/supabaseService';
 import './ProjectPages.css';
 
 const Commercial = () => {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const filtered = db.getProjects().filter(p => p.category === 'commercial');
-    setProjects(filtered);
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const allProj = await supabaseService.getProjects();
+        const filtered = allProj.filter(p => p.category === 'commercial');
+        setProjects(filtered);
+      } catch (err) {
+        console.error("Error loading commercial projects:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
   }, []);
 
   return (
@@ -31,7 +43,25 @@ const Commercial = () => {
 
       {/* Portfolio Gallery */}
       <section className="portfolio-gallery container">
-        {projects.length === 0 ? (
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '60px 0', flexDirection: 'column', gap: '15px', width: '100%' }}>
+            <div style={{
+              border: '3px solid rgba(55, 26, 16, 0.1)',
+              width: '30px',
+              height: '30px',
+              borderRadius: '50%',
+              borderLeftColor: '#371A10',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <span style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.9rem' }}>Loading portfolio from Supabase...</span>
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        ) : projects.length === 0 ? (
           <p style={{ textAlign: 'center', padding: '50px 0', color: 'var(--color-text-muted)', width: '100%', fontSize: '1.1rem' }}>
             No commercial projects published yet. Check back soon!
           </p>

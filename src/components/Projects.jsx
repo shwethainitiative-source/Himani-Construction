@@ -1,20 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { db } from '../utils/db';
+import { supabaseService } from '../utils/supabaseService';
 import './Projects.css';
 
 const Projects = () => {
   const [projectsData, setProjectsData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
   const [dragStartX, setDragStartX] = useState(null);
   const trackRef = useRef(null);
 
   useEffect(() => {
-    const data = db.getProjects();
-    setProjectsData(data);
-    if (data.length > 0) {
-      // Set center active index
-      setActiveIndex(Math.min(2, Math.floor(data.length / 2)));
-    }
+    const fetchProjects = async () => {
+      setLoading(true);
+      try {
+        const data = await supabaseService.getProjects();
+        setProjectsData(data);
+        if (data.length > 0) {
+          // Set center active index
+          setActiveIndex(Math.min(2, Math.floor(data.length / 2)));
+        }
+      } catch (err) {
+        console.error("Error fetching projects from Supabase:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
   }, []);
 
   const handleDragStart = (e) => {
@@ -67,6 +78,35 @@ const Projects = () => {
     
     return `translateX(${direction * translateX}%) scale(${scale})`;
   };
+
+  if (loading) {
+    return (
+      <section className="projects">
+        <div className="container">
+          <h4 className="projects-subtitle">OUR PROJECTS</h4>
+          <h2 className="projects-title">Our latest construction<br/>and design work</h2>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '300px',
+            flexDirection: 'column',
+            gap: '15px'
+          }}>
+            <div style={{
+              border: '3px solid rgba(55, 26, 16, 0.1)',
+              width: '30px',
+              height: '30px',
+              borderRadius: '50%',
+              borderLeftColor: '#371A10',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <span style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.9rem' }}>Loading portfolios from Supabase...</span>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (projectsData.length === 0) {
     return (

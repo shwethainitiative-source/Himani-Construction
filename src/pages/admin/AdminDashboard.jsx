@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db } from '../../utils/db';
+import { supabaseService } from '../../utils/supabaseService';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('projects');
+  const [activeTab, setActiveTab] = useState('overview');
   
   // Database state
   const [projects, setProjects] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [globalLoading, setGlobalLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
 
   // Stats
   const [stats, setStats] = useState({
@@ -21,6 +24,7 @@ const AdminDashboard = () => {
   // Modal / Form state for Projects
   const [showProjModal, setShowProjModal] = useState(false);
   const [editingProj, setEditingProj] = useState(null); // null means adding new
+  const [projFile, setProjFile] = useState(null);
   const [projForm, setProjForm] = useState({
     title: '',
     category: 'residential',
@@ -32,6 +36,7 @@ const AdminDashboard = () => {
   // Modal / Form state for Blogs
   const [showBlogModal, setShowBlogModal] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null); // null means adding new
+  const [blogFile, setBlogFile] = useState(null);
   const [blogForm, setBlogForm] = useState({
     title: '',
     category: 'Architecture',
@@ -42,58 +47,73 @@ const AdminDashboard = () => {
   });
 
   // Load database content
-  const loadData = () => {
-    const allProj = db.getProjects();
-    const allBlogs = db.getBlogs();
-    setProjects(allProj);
-    setBlogs(allBlogs);
+  const loadData = async () => {
+    try {
+      const allProj = await supabaseService.getProjects();
+      const allBlogs = await supabaseService.getBlogs();
+      setProjects(allProj);
+      setBlogs(allBlogs);
 
-    // Calculate dynamic stats
-    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    const recentProj = allProj.filter(p => {
-      const pTime = new Date(p.date).getTime();
-      return pTime >= thirtyDaysAgo;
-    }).length;
-    const recentBlogs = allBlogs.filter(b => {
-      const bTime = new Date(b.date).getTime();
-      return bTime >= thirtyDaysAgo;
-    }).length;
+      // Calculate dynamic stats (last 30 days)
+      const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+      const recentProj = allProj.filter(p => {
+        const pTime = new Date(p.date).getTime();
+        return pTime >= thirtyDaysAgo;
+      }).length;
+      const recentBlogs = allBlogs.filter(b => {
+        const bTime = new Date(b.date).getTime();
+        return bTime >= thirtyDaysAgo;
+      }).length;
 
-    setStats({
-      totalProjects: allProj.length,
-      totalBlogs: allBlogs.length,
-      recentCount: recentProj + recentBlogs
-    });
+      setStats({
+        totalProjects: allProj.length,
+        totalBlogs: allBlogs.length,
+        recentCount: recentProj + recentBlogs
+      });
+    } catch (err) {
+      console.error("Error loading dashboard data:", err.message);
+    }
   };
 
   useEffect(() => {
-    loadData();
+    const initDashboard = async () => {
+      setGlobalLoading(true);
+      const session = await supabaseService.getSession();
+      if (session && session.user) {
+        setAdminEmail(session.user.email);
+      }
+      await loadData();
+      setGlobalLoading(false);
+    };
+    initDashboard();
   }, []);
 
-  const handleLogout = () => {
-    db.logout();
+  const handleLogout = async () => {
+    await supabaseService.signOut();
     navigate('/admin/login');
   };
 
-  // Image upload base64 converter
+  // Image upload handler
   const handleImageFileChange = (e, formType) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (formType === 'project') {
-          setProjForm(prev => ({ ...prev, img: reader.result }));
-        } else {
-          setBlogForm(prev => ({ ...prev, img: reader.result }));
-        }
-      };
-      reader.readAsDataURL(file);
+      // Keep file object for Supabase upload
+      if (formType === 'project') {
+        setProjFile(file);
+        // Create local preview URL
+        setProjForm(prev => ({ ...prev, img: URL.createObjectURL(file) }));
+      } else {
+        setBlogFile(file);
+        // Create local preview URL
+        setBlogForm(prev => ({ ...prev, img: URL.createObjectURL(file) }));
+      }
     }
   };
 
   // Projects CRUD Actions
   const handleOpenProjAdd = () => {
     setEditingProj(null);
+    setProjFile(null);
     setProjForm({
       title: '',
       category: 'residential',
@@ -106,6 +126,7 @@ const AdminDashboard = () => {
 
   const handleOpenProjEdit = (proj) => {
     setEditingProj(proj);
+    setProjFile(null);
     setProjForm({
       title: proj.title,
       category: proj.category,
@@ -116,32 +137,51 @@ const AdminDashboard = () => {
     setShowProjModal(true);
   };
 
-  const handleProjSubmit = (e) => {
+  const handleProjSubmit = async (e) => {
     e.preventDefault();
-    if (!projForm.title || !projForm.description || !projForm.img) {
+    if (!projForm.title || !projForm.description || (!projForm.img && !projFile)) {
       alert('Please fill out all project fields including selecting or pasting an image.');
       return;
     }
 
-    if (editingProj) {
-      db.updateProject(editingProj.id, projForm);
-    } else {
-      db.addProject(projForm);
+    setActionLoading(true);
+    try {
+      if (editingProj) {
+        const updatePayload = {
+          ...projForm,
+          oldImgUrl: editingProj.img // Send for old image cleanup if replacing
+        };
+        await supabaseService.updateProject(editingProj.id, updatePayload, projFile);
+      } else {
+        await supabaseService.addProject(projForm, projFile);
+      }
+      await loadData();
+      setShowProjModal(false);
+    } catch (err) {
+      alert(`Failed to save project: ${err.message}`);
+    } finally {
+      setActionLoading(false);
     }
-    loadData();
-    setShowProjModal(false);
   };
 
-  const handleProjDelete = (id) => {
+  const handleProjDelete = async (id, imgUrl) => {
     if (window.confirm('Are you sure you want to delete this project?')) {
-      db.deleteProject(id);
-      loadData();
+      setActionLoading(true);
+      try {
+        await supabaseService.deleteProject(id, imgUrl);
+        await loadData();
+      } catch (err) {
+        alert(`Failed to delete project: ${err.message}`);
+      } finally {
+        setActionLoading(false);
+      }
     }
   };
 
   // Blogs CRUD Actions
   const handleOpenBlogAdd = () => {
     setEditingBlog(null);
+    setBlogFile(null);
     setBlogForm({
       title: '',
       category: 'Architecture',
@@ -155,6 +195,7 @@ const AdminDashboard = () => {
 
   const handleOpenBlogEdit = (blog) => {
     setEditingBlog(blog);
+    setBlogFile(null);
     setBlogForm({
       title: blog.title,
       category: blog.category,
@@ -166,26 +207,44 @@ const AdminDashboard = () => {
     setShowBlogModal(true);
   };
 
-  const handleBlogSubmit = (e) => {
+  const handleBlogSubmit = async (e) => {
     e.preventDefault();
-    if (!blogForm.title || !blogForm.description || !blogForm.img) {
+    if (!blogForm.title || !blogForm.description || (!blogForm.img && !blogFile)) {
       alert('Please fill out all blog fields including selecting or pasting an image.');
       return;
     }
 
-    if (editingBlog) {
-      db.updateBlog(editingBlog.id, blogForm);
-    } else {
-      db.addBlog(blogForm);
+    setActionLoading(true);
+    try {
+      if (editingBlog) {
+        const updatePayload = {
+          ...blogForm,
+          oldImgUrl: editingBlog.img
+        };
+        await supabaseService.updateBlog(editingBlog.id, updatePayload, blogFile);
+      } else {
+        await supabaseService.addBlog(blogForm, blogFile);
+      }
+      await loadData();
+      setShowBlogModal(false);
+    } catch (err) {
+      alert(`Failed to save article: ${err.message}`);
+    } finally {
+      setActionLoading(false);
     }
-    loadData();
-    setShowBlogModal(false);
   };
 
-  const handleBlogDelete = (id) => {
+  const handleBlogDelete = async (id, imgUrl) => {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
-      db.deleteBlog(id);
-      loadData();
+      setActionLoading(true);
+      try {
+        await supabaseService.deleteBlog(id, imgUrl);
+        await loadData();
+      } catch (err) {
+        alert(`Failed to delete article: ${err.message}`);
+      } finally {
+        setActionLoading(false);
+      }
     }
   };
 
@@ -199,6 +258,37 @@ const AdminDashboard = () => {
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, 3);
   };
+
+  if (globalLoading) {
+    return (
+      <div className="admin-loading-screen" style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f5f5f5',
+        flexDirection: 'column',
+        gap: '20px',
+        fontFamily: "'Poppins', sans-serif"
+      }}>
+        <div style={{
+          border: '4px solid rgba(55, 26, 16, 0.1)',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          borderLeftColor: '#371A10',
+          animation: 'spin 1s linear infinite'
+        }}></div>
+        <span style={{ color: '#371A10', fontWeight: 600 }}>Loading Cloud Databases...</span>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-dashboard">
@@ -234,7 +324,7 @@ const AdminDashboard = () => {
           <div className="admin-profile">
             <div className="profile-info">
               <span className="profile-role">Logged in as</span>
-              <span className="profile-email" title={db.getAdminEmail()}>{db.getAdminEmail()}</span>
+              <span className="profile-email" title={adminEmail}>{adminEmail}</span>
             </div>
           </div>
           <button onClick={handleLogout} className="logout-btn">
@@ -245,6 +335,24 @@ const AdminDashboard = () => {
 
       {/* Main Content Area */}
       <main className="dashboard-main">
+        {/* Action Blocking Overlay */}
+        {actionLoading && (
+          <div className="action-loading-overlay" style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            zIndex: 9999, flexDirection: 'column', gap: '15px', color: 'white'
+          }}>
+            <div style={{
+              border: '4px solid rgba(255,255,255,0.2)',
+              width: '40px', height: '40px', borderRadius: '50%',
+              borderLeftColor: '#FFCB96', animation: 'spin 1s linear infinite'
+            }}></div>
+            <span style={{ fontWeight: 600 }}>Syncing changes with cloud backend...</span>
+          </div>
+        )}
+
         {/* Top Header */}
         <header className="dashboard-header">
           <h1>Admin Dashboard</h1>
@@ -287,7 +395,7 @@ const AdminDashboard = () => {
           {activeTab === 'overview' && (
             <div className="tab-pane active-pane">
               <h2>Recent Content Activity</h2>
-              <p className="tab-description">The latest items uploaded across your projects and blogs.</p>
+              <p className="tab-description">The latest items uploaded across your projects and blogs in the Supabase database.</p>
               
               <div className="recent-activity-list">
                 {getRecentUploads().length === 0 ? (
@@ -321,7 +429,7 @@ const AdminDashboard = () => {
               <div className="pane-header">
                 <div>
                   <h2>Project Portfolios</h2>
-                  <p className="tab-description">Add, update, or remove construction & interior projects.</p>
+                  <p className="tab-description">Add, update, or remove construction & interior projects securely synchronized in cloud tables.</p>
                 </div>
                 <button onClick={handleOpenProjAdd} className="btn-add-new">
                   ➕ Add New Project
@@ -347,7 +455,7 @@ const AdminDashboard = () => {
                         <button onClick={() => handleOpenProjEdit(proj)} className="btn-edit">
                           ✏️ Edit
                         </button>
-                        <button onClick={() => handleProjDelete(proj.id)} className="btn-delete">
+                        <button onClick={() => handleProjDelete(proj.id, proj.img)} className="btn-delete">
                           🗑️ Delete
                         </button>
                       </div>
@@ -364,7 +472,7 @@ const AdminDashboard = () => {
               <div className="pane-header">
                 <div>
                   <h2>Blog Articles</h2>
-                  <p className="tab-description">Manage educational news, tips, and insights for site readers.</p>
+                  <p className="tab-description">Manage educational news, tips, and insights for site readers securely synchronized in cloud tables.</p>
                 </div>
                 <button onClick={handleOpenBlogAdd} className="btn-add-new">
                   ➕ Add New Blog Post
@@ -391,7 +499,7 @@ const AdminDashboard = () => {
                         <button onClick={() => handleOpenBlogEdit(blog)} className="btn-edit">
                           ✏️ Edit
                         </button>
-                        <button onClick={() => handleBlogDelete(blog.id)} className="btn-delete">
+                        <button onClick={() => handleBlogDelete(blog.id, blog.img)} className="btn-delete">
                           🗑️ Delete
                         </button>
                       </div>
@@ -474,8 +582,11 @@ const AdminDashboard = () => {
                     <span>Paste Image Web URL:</span>
                     <input 
                       type="text" 
-                      value={projForm.img.startsWith('data:') ? '' : projForm.img}
-                      onChange={e => setProjForm({...projForm, img: e.target.value})}
+                      value={projForm.img.startsWith('blob:') ? '' : projForm.img}
+                      onChange={e => {
+                        setProjFile(null); // Clear file upload
+                        setProjForm({...projForm, img: e.target.value});
+                      }}
                       placeholder="e.g. /images/project_1.png or https://unsplash.com/..."
                     />
                   </div>
@@ -579,8 +690,11 @@ const AdminDashboard = () => {
                     <span>Paste Image Web URL:</span>
                     <input 
                       type="text" 
-                      value={blogForm.img.startsWith('data:') ? '' : blogForm.img}
-                      onChange={e => setBlogForm({...blogForm, img: e.target.value})}
+                      value={blogForm.img.startsWith('blob:') ? '' : blogForm.img}
+                      onChange={e => {
+                        setBlogFile(null); // Clear file upload
+                        setBlogForm({...blogForm, img: e.target.value});
+                      }}
                       placeholder="e.g. /images/project_2.png or https://unsplash.com/..."
                     />
                   </div>

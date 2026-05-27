@@ -1,13 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../utils/db';
+import { supabaseService } from '../utils/supabaseService';
 import './Blog.css';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setBlogs(db.getBlogs());
+    const fetchBlogs = async () => {
+      setLoading(true);
+      try {
+        const data = await supabaseService.getBlogs();
+        setBlogs(data);
+      } catch (err) {
+        console.error("Error loading blog posts from Supabase:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlogs();
   }, []);
+
+  if (loading) {
+    return (
+      <main className="blog-page" style={{ padding: '100px 0', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '15px' }}>
+        <div style={{
+          border: '3px solid rgba(55, 26, 16, 0.1)',
+          width: '35px',
+          height: '35px',
+          borderRadius: '50%',
+          borderLeftColor: '#371A10',
+          animation: 'spin 1s linear infinite'
+        }}></div>
+        <span style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.95rem', fontFamily: "'Poppins', sans-serif" }}>
+          Loading insights from Supabase...
+        </span>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </main>
+    );
+  }
 
   if (blogs.length === 0) {
     return (
