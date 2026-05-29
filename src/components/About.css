@@ -14,6 +14,9 @@
   position: relative;
   display: flex;
   justify-content: center;
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .blob-shape {
@@ -72,18 +75,14 @@
 @media (max-width: 992px) {
   .about-container {
     flex-direction: column;
+    gap: 40px;
   }
   
   .about-content {
     text-align: center;
   }
   
-  .blob-shape {
-    display: none;
-  }
-  
-  .about-image {
-    clip-path: none;
-    border-radius: 20px;
+  .about-image-wrapper {
+    margin-bottom: 30px;
   }
 }
