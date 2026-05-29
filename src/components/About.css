@@ -25,12 +25,6 @@
   z-index: 1;
   top: -10px;
   left: -10px;
-  animation: blob-bounce 10s infinite alternate;
-}
-
-@keyframes blob-bounce {
-  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-  100% { border-radius: 60% 40% 30% 70% / 60% 50% 40% 50%; }
 }
 
 .about-image {
