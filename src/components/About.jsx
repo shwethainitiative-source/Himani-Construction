@@ -71,48 +71,48 @@ const About = () => {
   return (
     <section className="about">
       <div className="container about-container">
-        
+
         {/* Left Side: Text Content */}
         <div className="about-content">
           <h2 className="section-title">WHY CHOOSE US ?</h2>
           <p className="about-text">
-            Himani Construction & Interiors is a trusted name in delivering high-quality 
-            construction and interior design solutions. We specialize in creating modern, 
-            functional, and aesthetically pleasing spaces that reflect our clients' vision 
+            Himani Construction & Interiors is a trusted name in delivering high-quality
+            construction and interior design solutions. We specialize in creating modern,
+            functional, and aesthetically pleasing spaces that reflect our clients' vision
             and lifestyle.
           </p>
           <p className="about-text">
-            With a strong commitment to quality, innovation, and timely delivery, we handle 
-            every project with precision—from initial planning and design to final execution. 
-            Whether it's residential homes, commercial spaces, or interior transformations, 
+            With a strong commitment to quality, innovation, and timely delivery, we handle
+            every project with precision—from initial planning and design to final execution.
+            Whether it's residential homes, commercial spaces, or interior transformations,
             our team ensures attention to detail at every step.
           </p>
         </div>
 
         {/* Right Side: Premium Statistics Section */}
         <div className="about-stats-container">
-          
+
           {/* Circular SVG Badge */}
           <div className="badge-wrapper">
             <svg viewBox="0 0 160 160" width="160" height="160" className="badge-svg">
               <path id="curve-top" d="M 20,80 A 60,60 0 0,1 140,80" fill="transparent" />
               <path id="curve-bottom" d="M 140,80 A 60,60 0 0,1 20,80" fill="transparent" />
-              
+
               <circle cx="80" cy="80" r="54" fill="#025981" />
               <circle cx="80" cy="80" r="58" fill="none" stroke="#b89561" stroke-width="1.5" stroke-dasharray="4 3" />
-              
+
               <text fontSize="7" fontWeight="700" fill="var(--color-dark-brown)" letterSpacing="1.2">
                 <textPath href="#curve-top" startOffset="50%" textAnchor="middle">
                   ENVIRONMENTAL HEALTH & SAFETY
                 </textPath>
               </text>
-              
+
               <text fontSize="7" fontWeight="700" fill="var(--color-dark-brown)" letterSpacing="1.2">
                 <textPath href="#curve-bottom" startOffset="50%" textAnchor="middle">
                   ★ ISO 9001:2015 CERTIFIED ★
                 </textPath>
               </text>
-              
+
               <text x="80" y="65" fontSize="8" fontWeight="700" fill="#e5c158" textAnchor="middle" letterSpacing="1.2">
                 HIMANI
               </text>
@@ -129,33 +129,33 @@ const About = () => {
           <div className="about-stats-grid">
             <div className="stat-item">
               <div className="stat-number">
-                <AnimatedCounter endValue="22" suffix="+" />
+                <AnimatedCounter endValue="95" suffix="+" />
               </div>
-              <div className="stat-label">Years of Excellence</div>
+              <div className="stat-label">Residential Construction</div>
             </div>
 
             <div className="stat-item">
               <div className="stat-number">
-                <AnimatedCounter endValue="300" suffix="+" />
+                <AnimatedCounter endValue="70" suffix="+" />
               </div>
-              <div className="stat-label">Projects Completed</div>
+              <div className="stat-label">Commercial Construction</div>
             </div>
 
             <div className="stat-item">
               <div className="stat-number">
-                <AnimatedCounter endValue="2.5" suffix="+" />
+                <AnimatedCounter endValue="72" suffix="+" />
               </div>
-              <div className="stat-label">Mn. Sq. Ft. Delivered</div>
+              <div className="stat-label">Interior Design</div>
             </div>
 
             <div className="stat-item">
               <div className="stat-number">
-                <AnimatedCounter endValue="1.8" suffix="+" />
+                <AnimatedCounter endValue="12" suffix="+" />
               </div>
-              <div className="stat-label">Mn. Sq. Ft. Underway</div>
+              <div className="stat-label">Renovation & Remodeling</div>
             </div>
           </div>
-          
+
         </div>
 
       </div>

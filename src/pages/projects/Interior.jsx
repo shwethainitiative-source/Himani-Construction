@@ -6,6 +6,7 @@ import './ProjectPages.css';
 const Interior = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -61,13 +62,31 @@ const Interior = () => {
         ) : (
           <div className="gallery-grid">
             {projects.map((project) => (
-              <div key={project.id} className="gallery-item">
+              <div 
+                key={project.id} 
+                className="gallery-item"
+                onClick={() => setSelectedProject(project)}
+              >
                 <img src={project.img} alt={project.title} />
                 <div className="gallery-overlay">
                   <h4>{project.title}</h4>
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Lightbox Preview */}
+        {selectedProject && (
+          <div className="lightbox-overlay" onClick={() => setSelectedProject(null)}>
+            <button className="lightbox-close" onClick={() => setSelectedProject(null)}>×</button>
+            <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+              <img src={selectedProject.img} alt={selectedProject.title} className="lightbox-image" />
+              <div className="lightbox-caption">
+                <h3>{selectedProject.title}</h3>
+                {selectedProject.description && <p>{selectedProject.description}</p>}
+              </div>
+            </div>
           </div>
         )}
       </section>
