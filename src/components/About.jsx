@@ -12,6 +12,9 @@ const AnimatedCounter = ({ endValue, duration = 2000, suffix = "" }) => {
         const [entry] = entries;
         if (entry.isIntersecting) {
           setHasStarted(true);
+        } else {
+          setHasStarted(false);
+          setCount(0);
         }
       },
       { threshold: 0.1 }
