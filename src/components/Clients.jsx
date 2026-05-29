@@ -2,7 +2,7 @@ import React from 'react';
 import './Clients.css';
 
 const Clients = () => {
-  // Staged client logos, containing all 10 unique uploaded logos and 2 duplicates to make exactly 12 items
+  // Staged client logos, containing all 12 unique uploaded logos
   const clientLogos = [
     { id: 1, name: "Public Works Department, Karnataka", src: "/images/clients/client_1.png" },
     { id: 2, name: "NMKRV College for Women", src: "/images/clients/client_2.png" },
@@ -14,8 +14,8 @@ const Clients = () => {
     { id: 8, name: "RV College of Nursing", src: "/images/clients/client_8.png" },
     { id: 9, name: "RV Institutions (Alternate)", src: "/images/clients/client_9.png" },
     { id: 10, name: "D.A. Pandu Memorial RV Dental College", src: "/images/clients/client_10.png" },
-    { id: 11, name: "Public Works Department, Karnataka", src: "/images/clients/client_1.png" },
-    { id: 12, name: "NMKRV College for Women", src: "/images/clients/client_2.png" }
+    { id: 11, name: "Shilpakruti", src: "/images/clients/client_11.jpg" },
+    { id: 12, name: "Volvo", src: "/images/clients/client_12.png" }
   ];
 
   return (
