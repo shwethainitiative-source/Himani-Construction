@@ -78,26 +78,12 @@ const AboutUs = () => {
       <section className="team">
         <div className="container">
           <h2 className="section-title">Meet Our Leadership</h2>
-          <div className="team-grid">
-            <div className="team-card">
-              <img src="/images/service-img-placeholder.png" alt="Jane Doe" className="team-profile-img" />
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="team-card" style={{ maxWidth: '300px' }}>
+              <img src="/images/leadership.jpg" alt="Mr. Ravindra T." className="team-profile-img-lg" />
               <div className="team-info">
-                <h4>Jane Doe</h4>
-                <p>Founder & CEO</p>
-              </div>
-            </div>
-            <div className="team-card">
-              <img src="/images/service-img-placeholder.png" alt="John Smith" className="team-profile-img" />
-              <div className="team-info">
-                <h4>John Smith</h4>
-                <p>Head of Construction</p>
-              </div>
-            </div>
-            <div className="team-card">
-              <img src="/images/service-img-placeholder.png" alt="Sarah Jenkins" className="team-profile-img" />
-              <div className="team-info">
-                <h4>Sarah Jenkins</h4>
-                <p>Lead Interior Designer</p>
+                <h4>Mr. Ravindra T.</h4>
+                <p style={{ color: 'var(--color-sky-blue)', fontWeight: '600', fontSize: '1.1rem' }}>Proprietor & Founder</p>
               </div>
             </div>
           </div>
