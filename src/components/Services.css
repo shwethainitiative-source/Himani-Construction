@@ -80,7 +80,8 @@
 
 @media (max-width: 768px) {
   .services {
-    margin-top: -60px;
+    margin-top: 40px;
+    padding: 0 20px;
   }
   .service-icon-wrapper {
     margin-top: 0;
