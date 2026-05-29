@@ -14,9 +14,6 @@
   position: relative;
   display: flex;
   justify-content: center;
-  max-width: 450px;
-  width: 100%;
-  margin: 0 auto;
 }
 
 .blob-shape {
@@ -83,6 +80,8 @@
   }
   
   .about-image-wrapper {
-    margin-bottom: 30px;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto 30px;
   }
 }
