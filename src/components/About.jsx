@@ -126,7 +126,7 @@ const About = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="stats-grid">
+          <div className="about-stats-grid">
             <div className="stat-item">
               <div className="stat-number">
                 <AnimatedCounter endValue="22" suffix="+" />

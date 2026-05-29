@@ -61,7 +61,7 @@
 }
 
 /* Stats Grid */
-.stats-grid {
+.about-stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 45px 50px;
@@ -124,16 +124,20 @@
 }
 
 @media (max-width: 576px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 35px;
+  .about-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px 20px;
   }
   
   .stat-number {
-    font-size: 46px;
+    font-size: 38px;
   }
   
   .stat-suffix {
-    font-size: 34px;
+    font-size: 28px;
+  }
+
+  .stat-label {
+    font-size: 11px;
   }
 }
