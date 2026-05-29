@@ -106,6 +106,7 @@
 
 .coverflow-card.active {
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
 }
 
 @media (max-width: 992px) {
@@ -124,4 +125,82 @@
   .projects-title {
     font-size: 32px;
   }
+}
+
+/* Lightbox Overlay Styles */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 3px solid var(--color-white);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-caption {
+  color: var(--color-white);
+  text-align: center;
+  margin-top: 15px;
+}
+
+.lightbox-caption h3 {
+  font-size: 1.5rem;
+  color: var(--color-yellow);
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-size: 3rem;
+  font-weight: 300;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.lightbox-close:hover {
+  color: var(--color-yellow);
+  transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

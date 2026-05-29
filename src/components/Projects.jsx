@@ -7,6 +7,7 @@ const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [dragStartX, setDragStartX] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   const trackRef = useRef(null);
 
   useEffect(() => {
@@ -60,6 +61,9 @@ const Projects = () => {
   const handleCardClick = (index) => {
     if (activeIndex !== index) {
       setActiveIndex(index);
+    } else {
+      // If it is the active center card, open it in the lightbox!
+      setSelectedProject(projectsData[index]);
     }
   };
 
@@ -180,9 +184,23 @@ const Projects = () => {
       
       <div className="container" style={{ marginTop: '30px' }}>
         <p style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.9rem' }}>
-          ← Swipe or click cards to explore →
+          ← Swipe or click cards to explore (click center card to enlarge) →
         </p>
       </div>
+
+      {/* Lightbox Preview */}
+      {selectedProject && (
+        <div className="lightbox-overlay" onClick={() => setSelectedProject(null)}>
+          <button className="lightbox-close" onClick={() => setSelectedProject(null)}>×</button>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedProject.img} alt={selectedProject.title} className="lightbox-image" />
+            <div className="lightbox-caption">
+              <h3>{selectedProject.title}</h3>
+              {selectedProject.description && <p>{selectedProject.description}</p>}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

@@ -103,13 +103,13 @@ const About = () => {
 
               <text fontSize="7" fontWeight="700" fill="var(--color-dark-brown)" letterSpacing="1.2">
                 <textPath href="#curve-top" startOffset="50%" textAnchor="middle">
-                  ENVIRONMENTAL HEALTH & SAFETY
+                  HIMANI CONSTRUCTIONS & INTERIORS
                 </textPath>
               </text>
 
               <text fontSize="7" fontWeight="700" fill="var(--color-dark-brown)" letterSpacing="1.2">
                 <textPath href="#curve-bottom" startOffset="50%" textAnchor="middle">
-                  ★ ISO 9001:2015 CERTIFIED ★
+                  ★ 2008 CERTIFIED ★
                 </textPath>
               </text>
 
@@ -117,10 +117,10 @@ const About = () => {
                 HIMANI
               </text>
               <text x="80" y="90" fontSize="22" fontWeight="800" fill="var(--color-white)" textAnchor="middle" letterSpacing="0.5">
-                EHS-Q
+                PROJECT
               </text>
               <text x="80" y="105" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.8)" text-anchor="middle" letterSpacing="1">
-                CLASS A GRADING
+                Trusted for quality
               </text>
             </svg>
           </div>
