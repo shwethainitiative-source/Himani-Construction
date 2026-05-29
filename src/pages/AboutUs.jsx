@@ -18,11 +18,9 @@ const AboutUs = () => {
           <div className="story-content">
             <h2>Our Story</h2>
             <p>
-              Founded on the principles of integrity, quality, and innovation, Himani Construction & Interiors has grown from a modest firm into one of the region's most trusted names in the construction industry.
-            </p>
+              Since first opened in 2008, Himani Construction and Interiors has earned a reputation for integrity, quality, service and attention. Our growth from local builder into one of the most reputed construction company, is a reflection of the strong relationships we have forged over the years and our personalized approach to client service.            </p>
             <p>
-              Over the years, we have successfully delivered countless residential and commercial projects, each standing as a testament to our commitment to excellence. We believe in building not just structures, but lasting relationships with our clients based on transparency and mutual respect.
-            </p>
+              With more than 22 years of serving Industrial, Commercial, Institutional and Residential buildings, We are also engaged in providing various construction services like Interior work, rain water harvesting, water proofing etc. we are proud that much of our business continues to come from repeat customers and client referrals. Regardless of the size or nature of each construction project, Himani Construction is committed to generating personalized, innovative, quality-driven solutions that reflect customer expectations and deliver superior outcome to them. At Himani Construction, our approach is simple, we aim to build and develop more than just great properties. We want to create lasting relationships. To us, every new project is an opportunity to build new bonds and reinforce relationships. We may work most often with concrete, steel and glass, yet our best work is derived of confidence, quality and pride in the work we do and those we work with.            </p>
           </div>
         </div>
       </section>
@@ -33,14 +31,12 @@ const AboutUs = () => {
           <div className="mv-card mission-card">
             <h3>Our Mission</h3>
             <p>
-              To provide unparalleled construction and interior design services that exceed client expectations through innovative solutions, superior craftsmanship, and a relentless dedication to quality and safety.
-            </p>
+              To provide quality workmanship and customer service and maintain the highest level of professionalism, honesty and fairness in our relationships with our customers, employees and vendors.            </p>
           </div>
           <div className="mv-card vision-card">
             <h3>Our Vision</h3>
             <p>
-              To be the premier construction and interior design company recognized for transforming dreams into enduring realities, setting new standards of excellence in the industry.
-            </p>
+              To become most trusted in construction by providing our services in the maximum and proper Environmental, health and safety and Quality level to gain our customer satisfaction. A company that our customers want to work with and our employees are proud to work for.            </p>
           </div>
         </div>
       </section>
