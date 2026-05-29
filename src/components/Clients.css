@@ -1,0 +1,210 @@
+.clients {
+  background-color: #faf8f5; /* Warm premium minimal background */
+  padding: 80px 0 100px 0;
+  text-align: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(55, 26, 16, 0.04);
+}
+
+.clients-subtitle {
+  color: var(--color-red);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.clients-title {
+  color: var(--color-dark-brown);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 50px;
+}
+
+/* Container with fade masks */
+.clients-marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0;
+}
+
+/* Soft gradients for seamless edge-fading */
+.clients-marquee-container::before,
+.clients-marquee-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients-marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, #faf8f5 0%, transparent 100%);
+}
+
+.clients-marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, #faf8f5 0%, transparent 100%);
+}
+
+/* Marquee viewbox */
+.clients-marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Running track */
+.clients-track {
+  display: flex;
+  width: max-content;
+  animation: scroll-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+/* Pause track scroll on hover */
+.clients-marquee:hover .clients-track {
+  animation-play-state: paused;
+}
+
+/* Flex group of logos */
+.clients-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 50px;
+  padding-right: 50px; /* Matches the gap to ensure pixel-perfect seamlessness */
+}
+
+/* Individual Logo Cards */
+.client-logo-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 110px;
+  background-color: var(--color-white);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(55, 26, 16, 0.02);
+  border: 1px solid rgba(55, 26, 16, 0.05);
+  padding: 18px 25px;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.4s ease;
+  cursor: pointer;
+}
+
+.client-logo-card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: grayscale(100%) opacity(0.65);
+  transition: filter 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Hover micro-interactions */
+.client-logo-card:hover {
+  transform: translateY(-6px) scale(1.04);
+  box-shadow: 0 15px 35px rgba(55, 26, 16, 0.08);
+  border-color: rgba(55, 26, 16, 0.15);
+}
+
+.client-logo-card:hover img {
+  filter: grayscale(0%) opacity(1);
+}
+
+/* Seamless translate infinite animation */
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .clients-title {
+    font-size: 34px;
+  }
+  
+  .client-logo-card {
+    width: 170px;
+    height: 100px;
+    padding: 15px 20px;
+  }
+  
+  .clients-group {
+    gap: 40px;
+    padding-right: 40px;
+  }
+  
+  .clients-marquee-container::before,
+  .clients-marquee-container::after {
+    width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .clients {
+    padding: 60px 0 80px 0;
+  }
+  
+  .clients-title {
+    font-size: 28px;
+    margin-bottom: 35px;
+  }
+  
+  .client-logo-card {
+    width: 140px;
+    height: 85px;
+    padding: 12px 15px;
+    border-radius: 12px;
+  }
+  
+  .clients-group {
+    gap: 30px;
+    padding-right: 30px;
+  }
+  
+  .clients-marquee-container::before,
+  .clients-marquee-container::after {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-subtitle {
+    font-size: 14px;
+  }
+
+  .clients-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .client-logo-card {
+    width: 120px;
+    height: 75px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  
+  .clients-group {
+    gap: 20px;
+    padding-right: 20px;
+  }
+  
+  .clients-marquee-container::before,
+  .clients-marquee-container::after {
+    width: 50px;
+  }
+}
