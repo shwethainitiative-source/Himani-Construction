@@ -1,9 +1,95 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ContactUs.css';
 
 const ContactUs = () => {
   const { hash } = useLocation();
+  const [formData, setFormData] = useState({
+    fname: '',
+    lname: '',
+    email: '',
+    subject: 'Residential Construction',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // basic validation
+    if (!formData.fname.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setSubmitStatus({
+        type: 'danger',
+        message: 'Please fill in all required fields (First Name, Email, and Message).'
+      });
+      return;
+    }
+
+    // email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setSubmitStatus({
+        type: 'danger',
+        message: 'Please enter a valid email address.'
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: '', message: '' });
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/himaniconstructionsandinterior@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: `${formData.fname} ${formData.lname}`.trim(),
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _subject: `New Himani Construction Enquiry: ${formData.subject}`
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success === 'true') {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you! Your message has been sent successfully. We will get back to you shortly.'
+        });
+        setFormData({
+          fname: '',
+          lname: '',
+          email: '',
+          subject: 'Residential Construction',
+          message: ''
+        });
+      } else {
+        throw new Error(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      setSubmitStatus({
+        type: 'danger',
+        message: err.message || 'Failed to send message. Please try again or contact us directly.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     if (hash) {
@@ -65,24 +151,57 @@ const ContactUs = () => {
 
             {/* Form */}
             <div className="contact-form-container">
-              <form>
+              {submitStatus.message && (
+                <div className={`alert alert-${submitStatus.type}`}>
+                  {submitStatus.type === 'success' ? '✅' : '❌'} {submitStatus.message}
+                </div>
+              )}
+              <form onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
-                    <label htmlFor="fname">First Name</label>
-                    <input type="text" id="fname" className="form-control" placeholder="John" />
+                    <label htmlFor="fname">First Name *</label>
+                    <input
+                      type="text"
+                      id="fname"
+                      className="form-control"
+                      placeholder="John"
+                      value={formData.fname}
+                      onChange={handleChange}
+                      required
+                    />
                   </div>
                   <div className="form-group">
                     <label htmlFor="lname">Last Name</label>
-                    <input type="text" id="lname" className="form-control" placeholder="Doe" />
+                    <input
+                      type="text"
+                      id="lname"
+                      className="form-control"
+                      placeholder="Doe"
+                      value={formData.lname}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
-                  <input type="email" id="email" className="form-control" placeholder="john@example.com" />
+                  <label htmlFor="email">Email Address *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="form-control"
+                    placeholder="john@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <div className="form-group">
                   <label htmlFor="subject">Subject</label>
-                  <select id="subject" className="form-control">
+                  <select
+                    id="subject"
+                    className="form-control"
+                    value={formData.subject}
+                    onChange={handleChange}
+                  >
                     <option>Residential Construction</option>
                     <option>Commercial Project</option>
                     <option>Interior Design</option>
@@ -91,10 +210,23 @@ const ContactUs = () => {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="message">Message</label>
-                  <textarea id="message" className="form-control" placeholder="How can we help you?"></textarea>
+                  <label htmlFor="message">Message *</label>
+                  <textarea
+                    id="message"
+                    className="form-control"
+                    placeholder="How can we help you?"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  ></textarea>
                 </div>
-                <button type="button" className="submit-btn">Send Message</button>
+                <button
+                  type="submit"
+                  className="submit-btn"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </button>
               </form>
             </div>
 

@@ -219,3 +219,45 @@ textarea.form-control {
     font-size: 2.5rem;
   }
 }
+
+/* Alerts styling */
+.alert {
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-success {
+  background-color: rgba(46, 117, 89, 0.1);
+  color: #2e7559;
+  border: 1px solid rgba(46, 117, 89, 0.2);
+}
+
+.alert-danger {
+  background-color: rgba(186, 37, 37, 0.1);
+  color: #ba2525;
+  border: 1px solid rgba(186, 37, 37, 0.2);
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
