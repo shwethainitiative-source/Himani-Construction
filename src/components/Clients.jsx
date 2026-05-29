@@ -2,18 +2,18 @@ import React from 'react';
 import './Clients.css';
 
 const Clients = () => {
-  // Staged client logos, duplicated to make exactly 12 items
+  // Staged client logos, containing all 10 unique uploaded logos and 2 duplicates to make exactly 12 items
   const clientLogos = [
     { id: 1, name: "Public Works Department, Karnataka", src: "/images/clients/client_1.png" },
     { id: 2, name: "NMKRV College for Women", src: "/images/clients/client_2.png" },
     { id: 3, name: "BMS College of Engineering", src: "/images/clients/client_3.jpg" },
     { id: 4, name: "National Health Mission, Karnataka", src: "/images/clients/client_4.png" },
     { id: 5, name: "e-Swathu, Panchayat Raj Karnataka", src: "/images/clients/client_5.jpg" },
-    { id: 6, name: "Public Works Department, Karnataka", src: "/images/clients/client_1.png" },
-    { id: 7, name: "NMKRV College for Women", src: "/images/clients/client_2.png" },
-    { id: 8, name: "BMS College of Engineering", src: "/images/clients/client_3.jpg" },
-    { id: 9, name: "National Health Mission, Karnataka", src: "/images/clients/client_4.png" },
-    { id: 10, name: "e-Swathu, Panchayat Raj Karnataka", src: "/images/clients/client_5.jpg" },
+    { id: 6, name: "RV College of Architecture", src: "/images/clients/client_6.png" },
+    { id: 7, name: "RV Institutions", src: "/images/clients/client_7.jpg" },
+    { id: 8, name: "RV College of Nursing", src: "/images/clients/client_8.png" },
+    { id: 9, name: "RV Institutions (Alternate)", src: "/images/clients/client_9.png" },
+    { id: 10, name: "D.A. Pandu Memorial RV Dental College", src: "/images/clients/client_10.png" },
     { id: 11, name: "Public Works Department, Karnataka", src: "/images/clients/client_1.png" },
     { id: 12, name: "NMKRV College for Women", src: "/images/clients/client_2.png" }
   ];
