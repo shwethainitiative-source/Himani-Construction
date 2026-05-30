@@ -14,6 +14,14 @@ const AdminDashboard = () => {
   const [globalLoading, setGlobalLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
 
+  // Hero Slider State
+  const [heroSlides, setHeroSlides] = useState([
+    { slot_number: 1, media_url: '/images/hero_bg.png', media_type: 'image', title: 'WE BUILD YOUR DREAMS', subtitle: 'Residential | Commercial | Interior Design', link_text: 'Get In Touch', link_url: '/contact#contact-form' },
+    { slot_number: 2, media_url: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80', media_type: 'image', title: 'PREMIUM INTERIOR DESIGN', subtitle: 'Crafting beautiful, functional living spaces tailored for you.', link_text: 'View Interior Projects', link_url: '/projects/interior' },
+    { slot_number: 3, media_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80', media_type: 'image', title: 'COMMERCIAL CONSTRUCTION', subtitle: 'Building high-performance corporate workspaces with structural integrity.', link_text: 'View Commercial Portfolios', link_url: '/projects/commercial' }
+  ]);
+  const [heroFiles, setHeroFiles] = useState({ 1: null, 2: null, 3: null });
+
   // Stats
   const [stats, setStats] = useState({
     totalProjects: 0,
@@ -54,6 +62,27 @@ const AdminDashboard = () => {
       setProjects(allProj);
       setBlogs(allBlogs);
 
+      // Load Hero Slides
+      try {
+        const dbHeroSlides = await supabaseService.getHeroSlides();
+        if (dbHeroSlides && dbHeroSlides.length > 0) {
+          const merged = [
+            { slot_number: 1, media_url: '/images/hero_bg.png', media_type: 'image', title: 'WE BUILD YOUR DREAMS', subtitle: 'Residential | Commercial | Interior Design', link_text: 'Get In Touch', link_url: '/contact#contact-form' },
+            { slot_number: 2, media_url: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80', media_type: 'image', title: 'PREMIUM INTERIOR DESIGN', subtitle: 'Crafting beautiful, functional living spaces tailored for you.', link_text: 'View Interior Projects', link_url: '/projects/interior' },
+            { slot_number: 3, media_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80', media_type: 'image', title: 'COMMERCIAL CONSTRUCTION', subtitle: 'Building high-performance corporate workspaces with structural integrity.', link_text: 'View Commercial Portfolios', link_url: '/projects/commercial' }
+          ];
+          dbHeroSlides.forEach(slide => {
+            const idx = slide.slot_number - 1;
+            if (idx >= 0 && idx < 3) {
+              merged[idx] = slide;
+            }
+          });
+          setHeroSlides(merged);
+        }
+      } catch (err) {
+        console.warn("Could not load hero slides in admin panel, using defaults:", err.message);
+      }
+
       // Calculate dynamic stats (last 30 days)
       const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
       const recentProj = allProj.filter(p => {
@@ -91,6 +120,73 @@ const AdminDashboard = () => {
   const handleLogout = async () => {
     await supabaseService.signOut();
     navigate('/admin/login');
+  };
+
+  // Hero Slide Action Handlers
+  const handleHeroFileChange = (e, slotNum) => {
+    const file = e.target.files[0];
+    if (file) {
+      const mediaType = file.type.startsWith('video') ? 'video' : 'image';
+      const previewUrl = URL.createObjectURL(file);
+      
+      setHeroFiles(prev => ({ ...prev, [slotNum]: file }));
+      setHeroSlides(prev => {
+        const updated = [...prev];
+        updated[slotNum - 1] = {
+          ...updated[slotNum - 1],
+          media_url: previewUrl,
+          media_type: mediaType
+        };
+        return updated;
+      });
+    }
+  };
+
+  const handleHeroTextChange = (slotNum, field, value) => {
+    setHeroSlides(prev => {
+      const updated = [...prev];
+      updated[slotNum - 1] = {
+        ...updated[slotNum - 1],
+        [field]: value
+      };
+      return updated;
+    });
+  };
+
+  const handleHeroSubmit = async (e, slotNum) => {
+    e.preventDefault();
+    const slideData = heroSlides[slotNum - 1];
+    const file = heroFiles[slotNum];
+
+    if (!slideData.media_url && !file) {
+      alert('Please provide a media file or URL for the slot.');
+      return;
+    }
+
+    setActionLoading(true);
+    try {
+      const oldMediaUrl = slideData.id ? slideData.media_url : null;
+      const payload = {
+        ...slideData,
+        oldMediaUrl: oldMediaUrl
+      };
+      
+      const savedSlide = await supabaseService.updateHeroSlide(slotNum, payload, file);
+      
+      setHeroSlides(prev => {
+        const updated = [...prev];
+        updated[slotNum - 1] = savedSlide;
+        return updated;
+      });
+      
+      setHeroFiles(prev => ({ ...prev, [slotNum]: null }));
+      alert(`Slot ${slotNum} updated successfully!`);
+      await loadData();
+    } catch (err) {
+      alert(`Failed to save Slot ${slotNum}: ${err.message}`);
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   // Image upload handler
@@ -318,6 +414,12 @@ const AdminDashboard = () => {
           >
             ✍️ Manage Blogs
           </button>
+          <button 
+            className={`nav-tab-btn ${activeTab === 'hero' ? 'active' : ''}`}
+            onClick={() => setActiveTab('hero')}
+          >
+            🖼️ Manage Hero Slider
+          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -506,6 +608,136 @@ const AdminDashboard = () => {
                     </div>
                   ))
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* HERO SLIDER TAB */}
+          {activeTab === 'hero' && (
+            <div className="tab-pane active-pane">
+              <div className="pane-header">
+                <div>
+                  <h2>Homepage Hero Slides</h2>
+                  <p className="tab-description">Replace media (images or videos) and update slide captions for the 3 Homepage Hero slider slots. Saves securely sync to your database.</p>
+                </div>
+              </div>
+
+              <div className="hero-slots-grid">
+                {heroSlides.map((slide, index) => {
+                  const slotNum = index + 1;
+                  return (
+                    <div className="hero-slot-editor-card" key={slotNum}>
+                      <div className="slot-card-banner">
+                        <h3>Slot {slotNum}</h3>
+                        <span className={`slot-badge-media ${slide.media_type}`}>
+                          {slide.media_type.toUpperCase()}
+                        </span>
+                      </div>
+
+                      {/* Video/Image Live Preview Container */}
+                      <div className="slot-media-preview-box">
+                        {slide.media_url ? (
+                          slide.media_type === 'video' ? (
+                            <video 
+                              src={slide.media_url} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              className="slot-preview-media-content" 
+                            />
+                          ) : (
+                            <img 
+                              src={slide.media_url} 
+                              alt={`Slot ${slotNum} preview`} 
+                              className="slot-preview-media-content" 
+                            />
+                          )
+                        ) : (
+                          <div className="no-media-box">
+                            <span>No Media Selected</span>
+                          </div>
+                        )}
+                      </div>
+
+                      <form onSubmit={(e) => handleHeroSubmit(e, slotNum)} className="slot-editor-form">
+                        <div className="form-group-hero">
+                          <label>Upload Media File (Image or Video)</label>
+                          <div className="hero-file-uploader-box">
+                            <input 
+                              type="file" 
+                              accept="image/*,video/*"
+                              onChange={(e) => handleHeroFileChange(e, slotNum)}
+                            />
+                          </div>
+                          <span className="hero-form-help">Supports standard images and videos (up to 15MB).</span>
+                        </div>
+
+                        <div className="divider-hero-or"><span>OR</span></div>
+
+                        <div className="form-group-hero">
+                          <label>Paste Media Web URL</label>
+                          <input 
+                            type="text" 
+                            value={slide.media_url && slide.media_url.startsWith('blob:') ? '' : slide.media_url}
+                            onChange={(e) => handleHeroTextChange(slotNum, 'media_url', e.target.value)}
+                            placeholder="e.g. /images/hero_bg.png or https://example.com/video.mp4"
+                          />
+                        </div>
+
+                        <div className="form-group-hero">
+                          <label>Slide Title / Heading</label>
+                          <textarea 
+                            rows="2"
+                            value={slide.title || ''}
+                            onChange={(e) => handleHeroTextChange(slotNum, 'title', e.target.value)}
+                            placeholder="Heading Text (use Enter for line breaks)"
+                          ></textarea>
+                        </div>
+
+                        <div className="form-group-hero">
+                          <label>Slide Subtitle</label>
+                          <input 
+                            type="text" 
+                            value={slide.subtitle || ''}
+                            onChange={(e) => handleHeroTextChange(slotNum, 'subtitle', e.target.value)}
+                            placeholder="e.g. Residential | Commercial | Interior Design"
+                          />
+                        </div>
+
+                        <div className="hero-form-row">
+                          <div className="form-group-hero">
+                            <label>Button Text</label>
+                            <input 
+                              type="text" 
+                              value={slide.link_text || ''}
+                              onChange={(e) => handleHeroTextChange(slotNum, 'link_text', e.target.value)}
+                              placeholder="e.g. Get In Touch"
+                            />
+                          </div>
+
+                          <div className="form-group-hero">
+                            <label>Button Link URL</label>
+                            <input 
+                              type="text" 
+                              value={slide.link_url || ''}
+                              onChange={(e) => handleHeroTextChange(slotNum, 'link_url', e.target.value)}
+                              placeholder="e.g. /contact#contact-form"
+                            />
+                          </div>
+                        </div>
+
+                        <button 
+                          type="submit" 
+                          className="btn-save-hero-slot"
+                          disabled={actionLoading}
+                        >
+                          💾 Save Media Slot {slotNum}
+                        </button>
+                      </form>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

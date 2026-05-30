@@ -1,104 +1,344 @@
-.hero {
-  background: url('/images/hero_bg.png') no-repeat center center / cover;
-  padding: 120px 0;
+/* Hero Mixed-Media Slider Section */
+.hero-slider-section {
+  position: relative;
+  width: 100%;
+  height: 90vh; /* Premium full-look height */
+  min-height: 600px;
   overflow: hidden;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
+  background-color: #1a0c07; /* Dark elegant brown fallback */
 }
 
-.hero-container {
+.hero-slider-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Individual Slide Stacking */
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+/* Slide Media & Zoom Transition (Ken Burns effect) */
+.hero-slide-media-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-slide-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 7.5s cubic-bezier(0.1, 0.8, 0.25, 1);
+  transform: scale(1);
+  display: block;
+}
+
+/* Triggers slow magnification when active */
+.hero-slide.active .hero-slide-media {
+  transform: scale(1.08);
+}
+
+/* Premium Dark Gradient Overlay for Maximum Text Contrast */
+.hero-slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(55, 26, 16, 0.82) 0%, 
+    rgba(33, 13, 7, 0.45) 50%, 
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  z-index: 2;
+}
+
+/* Content Positioning */
+.hero-slide-content-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
   padding: 0 8%;
+  z-index: 3;
 }
 
-.hero-content {
-  flex: 1;
-  max-width: 500px;
+.hero-slide-content {
+  max-width: 650px;
+  text-align: left;
 }
 
-.hero-title {
-  font-size: 56px;
+/* Slide-Up Typography Transitions when active */
+.hero-slide-title {
+  font-size: 58px;
   font-weight: 800;
-  color: var(--color-dark-brown);
-  line-height: 1.1;
+  color: var(--color-white);
+  line-height: 1.15;
   margin-bottom: 20px;
+  letter-spacing: -0.5px;
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s, 
+              transform 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s;
 }
 
-.hero-subtitle {
-  font-size: 20px;
+.hero-slide.active .hero-slide-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-slide-subtitle {
+  font-size: 22px;
   font-weight: 500;
-  color: var(--color-dark-brown);
+  color: var(--color-beige);
   margin-bottom: 40px;
   font-style: italic;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s, 
+              transform 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.6s;
 }
 
-.btn-primary {
+.hero-slide.active .hero-slide-subtitle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-slide-action {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s, 
+              transform 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.8s;
+}
+
+.hero-slide.active .hero-slide-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Call-to-action Button with dynamic micro-interactions */
+.btn-primary-slider {
   background-color: var(--color-yellow);
   color: var(--color-dark-brown);
-  padding: 15px 35px;
+  padding: 16px 36px;
   font-size: 18px;
   font-weight: 700;
   border-radius: 5px;
   text-transform: uppercase;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  letter-spacing: 0.5px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.3s ease, 
+              background-color 0.3s ease, 
+              color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35);
+  display: inline-block;
 }
 
-.btn-primary:hover {
+.btn-primary-slider:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.55);
+  background-color: var(--color-white);
+  color: var(--color-dark-brown);
 }
 
+/* Sleek Hoverable Nav Arrows */
+.hero-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(55, 26, 16, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0; /* Hidden by default, fades in on parent hover */
+}
 
+/* Show arrows on section hover */
+.hero-slider-container:hover .hero-arrow-btn {
+  opacity: 1;
+}
+
+.prev-arrow {
+  left: 30px;
+}
+
+.next-arrow {
+  right: 30px;
+}
+
+.prev-arrow:hover {
+  transform: translateY(-50%) translateX(-2px);
+}
+
+.next-arrow:hover {
+  transform: translateY(-50%) translateX(2px);
+}
+
+.hero-arrow-btn:hover {
+  background-color: var(--color-yellow);
+  color: var(--color-dark-brown);
+  border-color: var(--color-yellow);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.45);
+}
+
+/* Carousel Indicator Dots */
+.hero-indicator-dots {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.hero-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hero-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.hero-dot.active {
+  background-color: var(--color-yellow);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* RESPONSIVE STYLING */
 
 @media (max-width: 992px) {
-  .hero-container {
-    flex-direction: column;
-    text-align: center;
+  .hero-slider-section {
+    height: 80vh;
   }
   
-  .hero-content {
-    margin: 0 auto;
+  .hero-slide-content-container {
+    padding: 0 6%;
+  }
+
+  .hero-slide-title {
+    font-size: 44px;
+  }
+
+  .hero-slide-subtitle {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 80px 0;
-    min-height: 50vh;
-  }
-
-  .hero-container {
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-    padding: 0 6%;
+  .hero-slider-section {
+    height: 70vh;
+    min-height: 480px;
   }
   
-  .hero-content {
-    margin: 0;
+  .hero-slide-content-container {
+    justify-content: center;
+    text-align: center;
+    padding: 0 4%;
+  }
+
+  .hero-slide-content {
     max-width: 100%;
   }
 
-  .hero-title {
+  .hero-slide-title {
     font-size: 34px;
     line-height: 1.2;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
   }
 
-  .hero-subtitle {
+  .hero-slide-subtitle {
     font-size: 16px;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
 
-  .btn-primary {
-    padding: 12px 25px;
+  .btn-primary-slider {
+    padding: 12px 28px;
     font-size: 15px;
-    display: inline-block;
+  }
+
+  .hero-arrow-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+    opacity: 0.8; /* Keep visible on mobile since there is no hover */
+  }
+
+  .prev-arrow {
+    left: 15px;
+  }
+
+  .next-arrow {
+    right: 15px;
+  }
+
+  .hero-indicator-dots {
+    bottom: 20px;
   }
 }
 
+@media (max-width: 480px) {
+  .hero-slider-section {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .hero-slide-title {
+    font-size: 28px;
+  }
+
+  .hero-slide-subtitle {
+    font-size: 14px;
+  }
+
+  .btn-primary-slider {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  /* Hide arrows on very small phones to avoid clutter, rely on dots/swipe */
+  .hero-arrow-btn {
+    display: none;
+  }
+}

@@ -248,5 +248,51 @@ export const supabaseService = {
 
     if (error) throw new Error(error.message);
     return true;
+  },
+
+  // =======================================================
+  // HERO SLIDES OPERATIONS
+  // =======================================================
+
+  getHeroSlides: async () => {
+    const { data, error } = await supabase
+      .from('hero_slides')
+      .select('*')
+      .order('slot_number', { ascending: true });
+
+    if (error) {
+      console.warn("Could not load hero slides from Supabase, using defaults:", error.message);
+      return null;
+    }
+    return data;
+  },
+
+  updateHeroSlide: async (slotNumber, slideData, file) => {
+    let mediaUrl = slideData.media_url;
+    if (file) {
+      if (slideData.oldMediaUrl) {
+        await deleteImageFromStorage(slideData.oldMediaUrl);
+      }
+      // Re-use uploadImage helper since it works for all file types (images, videos)
+      mediaUrl = await uploadImage('hero', file);
+    }
+
+    const payload = {
+      slot_number: slotNumber,
+      media_url: mediaUrl,
+      media_type: slideData.media_type || 'image',
+      title: slideData.title || '',
+      subtitle: slideData.subtitle || '',
+      link_text: slideData.link_text || 'Get In Touch',
+      link_url: slideData.link_url || '/contact#contact-form'
+    };
+
+    const { data, error } = await supabase
+      .from('hero_slides')
+      .upsert(payload, { onConflict: 'slot_number' })
+      .select();
+
+    if (error) throw new Error(error.message);
+    return data[0];
   }
 };

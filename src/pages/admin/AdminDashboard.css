@@ -801,3 +801,211 @@
     width: 100%;
   }
 }
+
+/* =======================================================
+   HERO SLIDER CONTROL TAB STYLING
+   ======================================================= */
+.hero-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.hero-slot-editor-card {
+  background-color: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-slot-editor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.slot-card-banner {
+  background-color: var(--color-dark-brown);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.slot-card-banner h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-beige);
+}
+
+.slot-badge-media {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.slot-badge-media.image {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.slot-badge-media.video {
+  background-color: #efebe9;
+  color: var(--color-dark-brown);
+}
+
+/* Media Preview container */
+.slot-media-preview-box {
+  width: 100%;
+  height: 180px;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot-preview-media-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-media-box {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: #f7f7f7;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Slot Forms styling */
+.slot-editor-form {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.form-group-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group-hero label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-dark-brown);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group-hero input[type="text"],
+.form-group-hero textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.form-group-hero input[type="text"]:focus,
+.form-group-hero textarea:focus {
+  border-color: var(--color-dark-brown);
+  outline: none;
+}
+
+.hero-file-uploader-box {
+  background-color: #f9f9f9;
+  border: 1px dashed #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.hero-file-uploader-box input[type="file"] {
+  width: 100%;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.hero-form-help {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.divider-hero-or {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #aaa;
+  position: relative;
+  margin: 5px 0;
+}
+
+.divider-hero-or::before,
+.divider-hero-or::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background-color: #eaeaea;
+}
+
+.divider-hero-or::before { left: 0; }
+.divider-hero-or::after { right: 0; }
+
+.hero-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.btn-save-hero-slot {
+  background-color: var(--color-dark-brown);
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-save-hero-slot:hover {
+  background-color: #210d07;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(55, 26, 16, 0.15);
+}
+
+.btn-save-hero-slot:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
