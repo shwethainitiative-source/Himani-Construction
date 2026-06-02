@@ -26,13 +26,14 @@ const Interior = () => {
 
   return (
     <main className="project-detail-page">
-      {/* Header */}
-      <section className="project-page-header">
-        <div className="pp-header-content">
-          <h1>Interior Design</h1>
-          <p>Transforming empty spaces into inspiring environments tailored to your taste.</p>
-        </div>
-      </section>
+      {/* Header Banner */}
+      <div className="project-page-banner-container">
+        <img 
+          src="/images/luxury_interior.png" 
+          alt="High-End Interior Design" 
+          className="project-page-banner-img" 
+        />
+      </div>
 
 
       {/* Portfolio Gallery */}
