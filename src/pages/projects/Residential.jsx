@@ -26,13 +26,14 @@ const Residential = () => {
 
   return (
     <main className="project-detail-page">
-      {/* Header */}
-      <section className="project-page-header">
-        <div className="pp-header-content">
-          <h1>Residential Construction</h1>
-          <p>Building your dream home with unparalleled craftsmanship and attention to detail.</p>
-        </div>
-      </section>
+      {/* Header Banner */}
+      <div className="project-page-banner-container">
+        <img 
+          src="/images/luxury_residential.jpg" 
+          alt="Luxury Residential Construction" 
+          className="project-page-banner-img" 
+        />
+      </div>
 
 
       {/* Portfolio Gallery */}

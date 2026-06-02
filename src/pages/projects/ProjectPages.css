@@ -294,4 +294,29 @@
 @keyframes scaleUp {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
-}
+}
+
+/* Responsive Full Width Banner for Residential Page */
+.project-page-banner-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  max-height: 550px;
+  background-color: var(--color-dark-brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-page-banner-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .project-page-banner-container {
+    max-height: 300px;
+  }
+}
