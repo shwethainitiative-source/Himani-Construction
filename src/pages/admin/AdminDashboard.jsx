@@ -215,7 +215,8 @@ const AdminDashboard = () => {
       category: 'residential',
       description: '',
       date: new Date().toISOString().split('T')[0],
-      img: ''
+      img: '',
+      featured: false
     });
     setShowProjModal(true);
   };
@@ -228,7 +229,8 @@ const AdminDashboard = () => {
       category: proj.category,
       description: proj.description,
       date: proj.date,
-      img: proj.img
+      img: proj.img,
+      featured: proj.featured || false
     });
     setShowProjModal(true);
   };
@@ -238,6 +240,18 @@ const AdminDashboard = () => {
     if (!projForm.title || !projForm.description || (!projForm.img && !projFile)) {
       alert('Please fill out all project fields including selecting or pasting an image.');
       return;
+    }
+
+    // Limit to a maximum of 10 homepage projects
+    if (projForm.featured) {
+      const currentFeaturedCount = projects.filter(
+        p => p.featured && (editingProj ? p.id !== editingProj.id : true)
+      ).length;
+
+      if (currentFeaturedCount >= 10) {
+        alert('You can only feature up to 10 projects on the homepage. Please unfeature another project before selecting this one.');
+        return;
+      }
     }
 
     setActionLoading(true);
@@ -547,6 +561,7 @@ const AdminDashboard = () => {
                       <div className="item-card-img">
                         <img src={proj.img} alt={proj.title} />
                         <span className="item-card-category">{proj.category}</span>
+                        {proj.featured && <span className="item-card-featured-badge">⭐ Homepage</span>}
                       </div>
                       <div className="item-card-body">
                         <h3>{proj.title}</h3>
@@ -796,6 +811,17 @@ const AdminDashboard = () => {
                   placeholder="Summarize structural features, premium materials, or client vision..."
                   required
                 ></textarea>
+              </div>
+
+              <div className="form-group checkbox-group">
+                <label className="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    checked={projForm.featured}
+                    onChange={e => setProjForm({...projForm, featured: e.target.checked})}
+                  />
+                  Selected for Homepage Carousel (Max 10)
+                </label>
               </div>
 
               <div className="form-group">

@@ -29,10 +29,15 @@ const Projects = () => {
       setLoading(true);
       try {
         const data = await supabaseService.getProjects();
-        setProjectsData(data);
-        if (data.length > 0) {
+        
+        // Filter by featured/selected flag, limit to 10. Fallback to first 10 projects if no selection
+        const featured = data.filter(p => p.featured).slice(0, 10);
+        const finalProjects = featured.length > 0 ? featured : data.slice(0, 10);
+        
+        setProjectsData(finalProjects);
+        if (finalProjects.length > 0) {
           // Set center active index
-          setActiveIndex(Math.min(2, Math.floor(data.length / 2)));
+          setActiveIndex(Math.min(2, Math.floor(finalProjects.length / 2)));
         }
       } catch (err) {
         console.error("Error fetching projects from Supabase:", err);

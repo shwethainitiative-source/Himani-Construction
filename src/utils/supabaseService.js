@@ -99,19 +99,39 @@ export const supabaseService = {
       imgUrl = await uploadImage('projects', file);
     }
 
-    const { data, error } = await supabase
-      .from('projects')
-      .insert([{
-        title: projectData.title,
-        category: projectData.category,
-        description: projectData.description,
-        date: projectData.date,
-        img: imgUrl
-      }])
-      .select();
+    const payload = {
+      title: projectData.title,
+      category: projectData.category,
+      description: projectData.description,
+      date: projectData.date,
+      img: imgUrl,
+      featured: projectData.featured || false
+    };
 
-    if (error) throw new Error(error.message);
-    return data[0];
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .insert([payload])
+        .select();
+
+      if (error) {
+        // Safe self-healing retry if DB doesn't have the 'featured' column yet
+        if (error.message.includes('column "featured" does not exist') || error.code === '42703') {
+          console.warn("Supabase 'projects' table is missing 'featured' column. Retrying without it...");
+          delete payload.featured;
+          const { data: retryData, error: retryError } = await supabase
+            .from('projects')
+            .insert([payload])
+            .select();
+          if (retryError) throw new Error(retryError.message);
+          return retryData[0];
+        }
+        throw new Error(error.message);
+      }
+      return data[0];
+    } catch (err) {
+      throw err;
+    }
   },
 
   updateProject: async (id, projectData, file) => {
@@ -124,20 +144,41 @@ export const supabaseService = {
       imgUrl = await uploadImage('projects', file);
     }
 
-    const { data, error } = await supabase
-      .from('projects')
-      .update({
-        title: projectData.title,
-        category: projectData.category,
-        description: projectData.description,
-        date: projectData.date,
-        img: imgUrl
-      })
-      .eq('id', id)
-      .select();
+    const payload = {
+      title: projectData.title,
+      category: projectData.category,
+      description: projectData.description,
+      date: projectData.date,
+      img: imgUrl,
+      featured: projectData.featured || false
+    };
 
-    if (error) throw new Error(error.message);
-    return data[0];
+    try {
+      const { data, error } = await supabase
+        .from('projects')
+        .update(payload)
+        .eq('id', id)
+        .select();
+
+      if (error) {
+        // Safe self-healing retry if DB doesn't have the 'featured' column yet
+        if (error.message.includes('column "featured" does not exist') || error.code === '42703') {
+          console.warn("Supabase 'projects' table is missing 'featured' column. Retrying without it...");
+          delete payload.featured;
+          const { data: retryData, error: retryError } = await supabase
+            .from('projects')
+            .update(payload)
+            .eq('id', id)
+            .select();
+          if (retryError) throw new Error(retryError.message);
+          return retryData[0];
+        }
+        throw new Error(error.message);
+      }
+      return data[0];
+    } catch (err) {
+      throw err;
+    }
   },
 
   deleteProject: async (id, imgUrl) => {

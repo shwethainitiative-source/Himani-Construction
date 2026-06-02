@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS public.projects (
     category text NOT NULL, -- residential, commercial, interior, renovation
     description text NOT NULL,
     date date DEFAULT CURRENT_DATE NOT NULL,
-    img text NOT NULL
+    img text NOT NULL,
+    featured boolean DEFAULT false NOT NULL -- Used to manage & select max 10 slider projects on the Homepage
 );
 
 -- Enable RLS
@@ -72,6 +73,13 @@ ON public.blogs FOR ALL
 TO authenticated 
 USING (true) 
 WITH CHECK (true);
+```
+
+### Existing Database Migration Note (Important)
+If you have already created the `projects` table previously, run the following SQL command in your **Supabase SQL Editor** to add the `featured` column without losing any existing project records:
+
+```sql
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS featured boolean DEFAULT false NOT NULL;
 ```
 
 ---
