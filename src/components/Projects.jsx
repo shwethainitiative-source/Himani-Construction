@@ -9,7 +9,9 @@ const Projects = () => {
   const [dragStartX, setDragStartX] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
   const trackRef = useRef(null);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -29,6 +31,31 @@ const Projects = () => {
     };
     fetchProjects();
   }, []);
+
+  // IntersectionObserver to trigger smooth entrance animation when projects come into view
+  useEffect(() => {
+    if (loading || projectsData.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [loading, projectsData.length]);
 
   // Automatic transition every 2 seconds (resets timer if activeIndex or pause state changes)
   useEffect(() => {
@@ -151,7 +178,7 @@ const Projects = () => {
   }
 
   return (
-    <section className="projects">
+    <section className="projects" ref={sectionRef}>
       <div className="container">
         <h4 className="projects-subtitle">OUR PROJECTS</h4>
         <h2 className="projects-title">Our latest construction<br/>and design work</h2>
@@ -181,7 +208,7 @@ const Projects = () => {
             ‹
           </button>
 
-          <div className="coverflow-track">
+          <div className={`coverflow-track ${isInView ? 'in-view' : ''}`}>
             {projectsData.map((project, index) => {
               const N = projectsData.length;
               let offset = (index - activeIndex) % N;

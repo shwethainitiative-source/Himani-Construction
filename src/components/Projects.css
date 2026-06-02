@@ -43,7 +43,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
 }
+
+.coverflow-track.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
 
 .coverflow-card {
   position: absolute;
