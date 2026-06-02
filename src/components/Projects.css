@@ -51,10 +51,10 @@
   height: 450px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-    opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-    z-index 0.6s;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    z-index 0.8s;
   will-change: transform, opacity;
   background-color: var(--color-dark-brown);
 }
@@ -66,6 +66,7 @@
   pointer-events: none;
   /* Prevents ghost dragging of images */
   display: block;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .coverflow-blur-overlay {
@@ -75,7 +76,7 @@
   /* Warm dark overlay */
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
@@ -87,7 +88,7 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   padding: 40px 25px 25px;
   text-align: left;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
   pointer-events: none;
 }
 
@@ -96,7 +97,7 @@
   font-size: 1.6rem;
   margin: 0;
   transform: translateY(10px);
-  transition: transform 0.6s ease;
+  transition: transform 0.8s ease;
 }
 
 .coverflow-card.active .coverflow-text-overlay h3 {
@@ -105,9 +106,14 @@
 }
 
 .coverflow-card.active {
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
+
+.coverflow-card.active:hover .coverflow-image {
+  transform: scale(1.08);
+}
+
 
 @media (max-width: 992px) {
   .coverflow-card {
@@ -204,3 +210,80 @@
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+
+/* Premium Navigation Controls */
+.coverflow-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--color-dark-brown);
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 25;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  user-select: none;
+}
+
+.coverflow-nav-btn:hover {
+  background: var(--color-dark-brown);
+  color: var(--color-white);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 12px 40px rgba(55, 26, 16, 0.35);
+}
+
+.coverflow-nav-btn.prev {
+  left: 5%;
+}
+
+.coverflow-nav-btn.next {
+  right: 5%;
+}
+
+/* Premium Pagination Dots */
+.coverflow-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+  padding: 0;
+  list-style: none;
+}
+
+.coverflow-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(55, 26, 16, 0.2);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.coverflow-dot.active {
+  width: 36px;
+  border-radius: 6px;
+  background-color: var(--color-red);
+  box-shadow: 0 2px 10px rgba(211, 47, 47, 0.4);
+}
+
+.coverflow-dot:hover {
+  background-color: var(--color-red);
+  transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+  .coverflow-nav-btn {
+    display: none; /* Hide arrows on tablets and mobile; rely on swiping/dots */
+  }
+}
