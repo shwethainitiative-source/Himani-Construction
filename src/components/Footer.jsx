@@ -54,6 +54,9 @@ const Footer = () => {
       <div className="footer-bottom">
         <div className="container">
           <p>&copy; {new Date().getFullYear()} Himani Construction & Interiors. All Rights Reserved.</p>
+          <p className="developer-credit">
+            Developed by <a href="https://shwethainitiative.com" target="_blank" rel="noopener noreferrer">Shwetha Initiative</a>
+          </p>
         </div>
       </div>
     </footer>

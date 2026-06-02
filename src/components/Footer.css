@@ -94,3 +94,23 @@
     margin: 0 auto 20px auto;
   }
 }
+
+.developer-credit {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #777777;
+}
+
+.developer-credit a {
+  color: #aaaaaa;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+.developer-credit a:hover {
+  color: var(--color-yellow, #ffcb96);
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
