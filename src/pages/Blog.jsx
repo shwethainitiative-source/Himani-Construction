@@ -5,6 +5,7 @@ import './Blog.css';
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -81,7 +82,7 @@ const Blog = () => {
                 <span className="post-meta">{featuredPost.category} • {featuredPost.date}</span>
                 <h2>{featuredPost.title}</h2>
                 <p>{featuredPost.description}</p>
-                <a href="#" className="read-more-btn" onClick={(e) => e.preventDefault()}>Read Article</a>
+                <button className="read-more-btn" onClick={() => setSelectedPost(featuredPost)}>Read Article</button>
               </div>
             </div>
           </div>
@@ -108,7 +109,7 @@ const Blog = () => {
                     <span className="post-meta">{post.category} • {post.date}</span>
                     <h3>{post.title}</h3>
                     <p>{post.description}</p>
-                    <a href="#" className="post-card-link" onClick={(e) => e.preventDefault()}>Read More →</a>
+                    <button className="post-card-link" onClick={() => setSelectedPost(post)}>Read More →</button>
                   </div>
                 </div>
               ))}
@@ -116,6 +117,35 @@ const Blog = () => {
           )}
         </div>
       </section>
+
+      {/* Detailed Blog Modal Lightbox */}
+      {selectedPost && (
+        <div className="blog-modal-overlay" onClick={() => setSelectedPost(null)}>
+          <button className="blog-modal-close" onClick={() => setSelectedPost(null)}>×</button>
+          <div className="blog-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="blog-modal-header">
+              <span className="blog-modal-meta">{selectedPost.category} • {selectedPost.date}</span>
+              <h2>{selectedPost.title}</h2>
+            </div>
+            
+            <img src={selectedPost.img} alt={selectedPost.title} className="blog-modal-image" />
+            
+            <div className="blog-modal-body">
+              <p>{selectedPost.description}</p>
+              
+              <div className="blog-modal-footer">
+                <hr />
+                <p className="blog-footer-text">
+                  Thank you for reading Himani Construction's design and construction insights. For professional design advice, construction consultations, or custom builder solutions, please contact our expert team.
+                </p>
+                <div style={{ marginTop: '25px' }}>
+                  <a href="/contact" className="read-more-btn" style={{ textDecoration: 'none' }}>Get In Touch</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
