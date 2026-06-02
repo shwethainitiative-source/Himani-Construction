@@ -307,6 +307,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Hardware acceleration to prevent GPU scaling blur */
+  transform: translateZ(0);
 }
 
 .project-page-banner-img {
@@ -314,4 +316,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  /* Premium rendering adjustments to maximize image clarity and sharpness */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
