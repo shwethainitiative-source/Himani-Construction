@@ -12,10 +12,8 @@ const Footer = () => {
             Building your dreams into reality with precision, quality, and modern design.
           </p>
           <div className="social-icons">
-            <a href="#" className="social-icon"><span>FB</span></a>
-            <a href="#" className="social-icon"><span>TW</span></a>
-            <a href="#" className="social-icon"><span>IG</span></a>
-            <a href="#" className="social-icon"><span>LI</span></a>
+            <a href="#" className="social-icon" aria-label="Facebook"><span>FB</span></a>
+            <a href="#" className="social-icon" aria-label="Instagram"><span>IG</span></a>
           </div>
         </div>
 
