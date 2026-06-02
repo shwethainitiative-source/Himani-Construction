@@ -93,12 +93,14 @@
 
 /* Slide-Up Typography Transitions when active */
 .hero-slide-title {
-  font-size: 58px;
-  font-weight: 800;
+  font-family: 'DaytonaPro-CondThin', 'Daytona Pro Cond Thin', 'Daytona Pro', 'Poppins', sans-serif;
+  font-size: 68px; /* Enlarged to showcase the premium architectural condensed thin font */
+  font-weight: 300; /* DaytonaPro-CondThin is a thin font; setting 300 preserves this light-weight premium aesthetic */
   color: var(--color-white);
-  line-height: 1.15;
+  line-height: 1.1;
   margin-bottom: 20px;
   letter-spacing: -0.5px;
+  text-transform: uppercase;
   opacity: 0;
   transform: translateY(35px);
   transition: opacity 0.9s cubic-bezier(0.215, 0.61, 0.355, 1) 0.4s, 
@@ -258,7 +260,7 @@
   }
 
   .hero-slide-title {
-    font-size: 44px;
+    font-size: 52px; /* Adjusted up for thin condensed font showcase */
   }
 
   .hero-slide-subtitle {
@@ -283,8 +285,8 @@
   }
 
   .hero-slide-title {
-    font-size: 34px;
-    line-height: 1.2;
+    font-size: 42px; /* Adjusted up for thin condensed font showcase */
+    line-height: 1.15;
     margin-bottom: 12px;
   }
 
@@ -325,7 +327,7 @@
   }
 
   .hero-slide-title {
-    font-size: 28px;
+    font-size: 32px; /* Adjusted up for thin condensed font showcase */
   }
 
   .hero-slide-subtitle {
