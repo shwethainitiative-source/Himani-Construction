@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Facebook, Instagram } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -12,8 +13,8 @@ const Footer = () => {
             Building your dreams into reality with precision, quality, and modern design.
           </p>
           <div className="social-icons">
-            <a href="#" className="social-icon" aria-label="Facebook"><span>FB</span></a>
-            <a href="#" className="social-icon" aria-label="Instagram"><span>IG</span></a>
+            <a href="#" className="social-icon" aria-label="Facebook"><Facebook size={18} /></a>
+            <a href="#" className="social-icon" aria-label="Instagram"><Instagram size={18} /></a>
           </div>
         </div>
 
