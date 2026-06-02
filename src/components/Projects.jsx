@@ -10,8 +10,19 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isInView, setIsInView] = useState(false);
+  const [entranceFinished, setEntranceFinished] = useState(false);
   const trackRef = useRef(null);
   const sectionRef = useRef(null);
+
+  // Mark entrance animation as finished after 2.2s to clean up transition-delays
+  useEffect(() => {
+    if (isInView) {
+      const timer = setTimeout(() => {
+        setEntranceFinished(true);
+      }, 2200);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView]);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -208,7 +219,7 @@ const Projects = () => {
             ‹
           </button>
 
-          <div className={`coverflow-track ${isInView ? 'in-view' : ''}`}>
+          <div className={`coverflow-track ${isInView ? 'in-view' : ''} ${entranceFinished ? 'entrance-finished' : ''}`}>
             {projectsData.map((project, index) => {
               const N = projectsData.length;
               let offset = (index - activeIndex) % N;
@@ -220,9 +231,9 @@ const Projects = () => {
               
               return (
                 <div 
-                  className={`coverflow-card ${isCenter ? 'active' : ''}`}
+                  className="coverflow-card-entrance"
                   key={project.id}
-                  onClick={() => handleCardClick(index)}
+                  data-offset={offset}
                   style={{
                     transform: getTransform(offset),
                     zIndex: 10 - absOffset,
@@ -230,21 +241,26 @@ const Projects = () => {
                     pointerEvents: absOffset > 2 ? 'none' : 'auto',
                   }}
                 >
-                  <img src={project.img} alt={project.title} className="coverflow-image" />
-                  
-                  {/* Dynamic blur/dark overlay for side images */}
                   <div 
-                    className="coverflow-blur-overlay"
-                    style={{ opacity: isCenter ? 0 : absOffset * 0.4 }}
-                  />
-                  
-                  {/* Text overlay only fully visible on active center card */}
-                  <div className="coverflow-text-overlay" style={{ opacity: isCenter ? 1 : 0 }}>
-                    <h3>{project.title}</h3>
-                    {project.description && (
-                      <p className="coverflow-card-desc">{project.description}</p>
-                    )}
-                    <span className="coverflow-card-cta">View Details →</span>
+                    className={`coverflow-card ${isCenter ? 'active' : ''}`}
+                    onClick={() => handleCardClick(index)}
+                  >
+                    <img src={project.img} alt={project.title} className="coverflow-image" />
+                    
+                    {/* Dynamic blur/dark overlay for side images */}
+                    <div 
+                      className="coverflow-blur-overlay"
+                      style={{ opacity: isCenter ? 0 : absOffset * 0.4 }}
+                    />
+                    
+                    {/* Text overlay only fully visible on active center card */}
+                    <div className="coverflow-text-overlay" style={{ opacity: isCenter ? 1 : 0 }}>
+                      <h3>{project.title}</h3>
+                      {project.description && (
+                        <p className="coverflow-card-desc">{project.description}</p>
+                      )}
+                      <span className="coverflow-card-cta">View Details →</span>
+                    </div>
                   </div>
                 </div>
               );

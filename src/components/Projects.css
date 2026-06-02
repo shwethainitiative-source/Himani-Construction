@@ -44,30 +44,90 @@
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1),
-    transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: opacity, transform;
+  transition: opacity 0.8s ease;
 }
 
 .coverflow-track.in-view {
   opacity: 1;
-  transform: scale(1);
 }
 
-
-.coverflow-card {
+/* absolute positioning wrapper for coverflow slide layout */
+.coverflow-card-entrance {
   position: absolute;
   width: 380px;
   height: 450px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
     opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
     z-index 0.8s;
   will-change: transform, opacity;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* inner card containing visual contents */
+.coverflow-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   background-color: var(--color-dark-brown);
+  will-change: transform, opacity;
+}
+
+/* Initial state before scroll in-view: scaled down and hidden */
+.coverflow-track:not(.entrance-finished) .coverflow-card {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.8s ease;
+}
+
+/* Initial door-opening positions: lateral cards are pushed inward towards the center */
+.coverflow-track:not(.entrance-finished) .coverflow-card-entrance[data-offset="-1"] .coverflow-card {
+  transform: scale(0.65) translateX(120px);
+}
+.coverflow-track:not(.entrance-finished) .coverflow-card-entrance[data-offset="1"] .coverflow-card {
+  transform: scale(0.65) translateX(-120px);
+}
+.coverflow-track:not(.entrance-finished) .coverflow-card-entrance[data-offset="-2"] .coverflow-card {
+  transform: scale(0.55) translateX(240px);
+}
+.coverflow-track:not(.entrance-finished) .coverflow-card-entrance[data-offset="2"] .coverflow-card {
+  transform: scale(0.55) translateX(-240px);
+}
+
+/* Staggered entrance reveals as the section comes into view */
+
+/* Stage 1 (t=0.2s): Center card zooms in */
+.coverflow-track.in-view:not(.entrance-finished) .coverflow-card-entrance[data-offset="0"] .coverflow-card {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0.2s;
+}
+
+/* Stage 2 (t=0.7s): Immediate adjacent pair slides outward from center (like doors opening) */
+.coverflow-track.in-view:not(.entrance-finished) .coverflow-card-entrance[data-offset="-1"] .coverflow-card,
+.coverflow-track.in-view:not(.entrance-finished) .coverflow-card-entrance[data-offset="1"] .coverflow-card {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  transition-delay: 0.7s;
+}
+
+/* Stage 3 (t=1.2s): Outer adjacent pair slides outward from inner pair */
+.coverflow-track.in-view:not(.entrance-finished) .coverflow-card-entrance[data-offset="-2"] .coverflow-card,
+.coverflow-track.in-view:not(.entrance-finished) .coverflow-card-entrance[data-offset="2"] .coverflow-card {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  transition-delay: 1.2s;
+}
+
+/* Once entrance is finished, clear entrance-specific styles to allow lag-free swiping/sliding */
+.coverflow-track.entrance-finished .coverflow-card {
+  opacity: 1;
+  transform: none;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .coverflow-image {
