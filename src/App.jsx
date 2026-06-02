@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import ServicesPage from './pages/ServicesPage';
 import Blog from './pages/Blog';
+import BlogDetail from './pages/BlogDetail';
 import ContactUs from './pages/ContactUs';
 import Residential from './pages/projects/Residential';
 import Commercial from './pages/projects/Commercial';
@@ -31,6 +32,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/projects/residential" element={<Residential />} />
         <Route path="/projects/commercial" element={<Commercial />} />
