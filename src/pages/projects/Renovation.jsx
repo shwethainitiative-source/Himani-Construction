@@ -26,13 +26,14 @@ const Renovation = () => {
 
   return (
     <main className="project-detail-page">
-      {/* Header */}
-      <section className="project-page-header">
-        <div className="pp-header-content">
-          <h1>Renovation & Remodeling</h1>
-          <p>Breathing new life into existing structures with modern upgrades.</p>
-        </div>
-      </section>
+      {/* Header Banner */}
+      <div className="project-page-banner-container">
+        <img 
+          src="/images/luxury_renovation.png" 
+          alt="Quality-Driven Renovation & Remodeling" 
+          className="project-page-banner-img" 
+        />
+      </div>
 
 
       {/* Portfolio Gallery */}
