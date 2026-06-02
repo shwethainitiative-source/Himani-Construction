@@ -48,7 +48,6 @@ const Commercial = () => {
               borderLeftColor: '#371A10',
               animation: 'spin 1s linear infinite'
             }}></div>
-            <span style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.9rem' }}>Loading portfolio from Supabase...</span>
             <style>{`
               @keyframes spin {
                 0% { transform: rotate(0deg); }
