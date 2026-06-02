@@ -258,65 +258,127 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(5px);
-  padding: 20px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 10px; /* Minimal padding to maximize full screen area */
 }
 
 .lightbox-content {
   position: relative;
-  max-width: 90%;
-  max-height: 85vh;
+  width: 95vw;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  justify-content: center;
+  animation: scaleUp 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .lightbox-image {
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 100%;
   object-fit: contain;
-  border-radius: 6px;
-  border: 3px solid var(--color-white);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  background: #000;
 }
 
 .lightbox-caption {
-  color: var(--color-white);
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(55, 26, 16, 0.85); /* Warm elegant brand dark brown */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 14px 28px;
+  border-radius: 40px;
   text-align: center;
-  margin-top: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  max-width: 85%;
+  pointer-events: none;
+  z-index: 10001;
 }
 
 .lightbox-caption h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: var(--color-yellow);
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   font-weight: 700;
 }
 
+.lightbox-caption p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
 .lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  background: none;
-  border: none;
+  position: fixed;
+  top: 30px;
+  right: 35px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: var(--color-white);
-  font-size: 3rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 2rem;
   font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  z-index: 10000;
-  transition: color 0.2s ease, transform 0.2s ease;
+  z-index: 10002;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .lightbox-close:hover {
-  color: var(--color-yellow);
-  transform: scale(1.1);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border-color: var(--color-red);
+  transform: scale(1.1) rotate(90deg);
+}
+
+@media (max-width: 768px) {
+  .lightbox-content {
+    width: 98vw;
+    height: 98vh;
+  }
+  
+  .lightbox-close {
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+  }
+
+  .lightbox-caption {
+    bottom: 15px;
+    padding: 10px 20px;
+    max-width: 90%;
+  }
+
+  .lightbox-caption h3 {
+    font-size: 1.1rem;
+  }
+
+  .lightbox-caption p {
+    font-size: 0.8rem;
+  }
 }
 
 @keyframes fadeIn {
