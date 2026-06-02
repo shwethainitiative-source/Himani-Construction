@@ -85,36 +85,44 @@
   .cta-banner {
     display: flex;
     flex-direction: row;
+    align-items: flex-end; /* Align bottom flush like desktop */
     padding: 30px 0;
-    align-items: center;
+    position: relative;
     background-color: transparent;
   }
   
   .cta-image-wrapper {
     flex: 0 0 38%;
     height: 180px;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 35px) 100%, 0 100%);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 81.8px) 100%, 0 100%);
     background-size: cover;
     background-position: center;
     z-index: 1;
   }
   
   .black-corner {
-    display: none;
+    display: block; /* Force visible */
+    position: absolute;
+    top: 30px; /* Matches banner padding-top */
+    left: calc(38% - 21.8px);
+    width: 21.8px;
+    height: 48px;
+    background-color: #000;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    z-index: 3;
   }
   
   .cta-content {
     flex: 1;
-    height: 180px;
+    height: 132px;
     background-color: var(--color-red);
-    clip-path: polygon(35px 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: -35px;
+    clip-path: polygon(60px 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: -81.8px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0 20px 0 50px;
-    gap: 12px;
+    flex-direction: row; /* Side-by-side horizontal row */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4% 0 85px; /* Clear slanted diagonal cleanly */
     z-index: 2;
   }
 
@@ -130,14 +138,14 @@
   }
   
   .cta-title {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.2;
     color: var(--color-white);
     font-weight: 800;
   }
   
   .cta-btn {
-    padding: 8px 18px;
+    padding: 10px 20px;
     font-size: 14px;
     font-weight: 700;
     border-radius: 4px;
@@ -150,31 +158,21 @@
   .cta-banner {
     padding: 20px 0;
   }
-
-  .cta-image-wrapper {
-    flex: 0 0 32%;
-    height: 150px;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 25px) 100%, 0 100%);
-  }
-
-  .cta-content {
-    height: 150px;
-    clip-path: polygon(25px 0, 100% 0, 100% 100%, 0 100%);
-    margin-left: -25px;
-    padding: 0 10px 0 35px;
-    gap: 8px;
+  
+  .black-corner {
+    top: 20px; /* Matches mobile banner padding-top */
   }
 
   .cta-subtitle {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .cta-title {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .cta-btn {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 7px 12px;
+    font-size: 11px;
   }
 }
