@@ -7,7 +7,7 @@ const Projects = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [dragStartX, setDragStartX] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [entranceFinished, setEntranceFinished] = useState(false);
@@ -70,14 +70,14 @@ const Projects = () => {
 
   // Automatic transition every 2 seconds (resets timer if activeIndex or pause state changes)
   useEffect(() => {
-    if (projectsData.length <= 1 || isPaused || selectedProject !== null) return;
+    if (projectsData.length <= 1 || isPaused || lightboxIndex !== null) return;
 
     const timer = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
     }, 2000);
 
     return () => clearInterval(timer);
-  }, [projectsData.length, isPaused, selectedProject, activeIndex]);
+  }, [projectsData.length, isPaused, lightboxIndex, activeIndex]);
 
   const handlePrev = () => {
     if (projectsData.length === 0) return;
@@ -87,6 +87,16 @@ const Projects = () => {
   const handleNext = () => {
     if (projectsData.length === 0) return;
     setActiveIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
+  };
+
+  const handleLightboxPrev = (e) => {
+    e.stopPropagation();
+    setLightboxIndex((prevIdx) => (prevIdx - 1 + projectsData.length) % projectsData.length);
+  };
+
+  const handleLightboxNext = (e) => {
+    e.stopPropagation();
+    setLightboxIndex((prevIdx) => (prevIdx + 1) % projectsData.length);
   };
 
   const handleDragStart = (e) => {
@@ -124,8 +134,8 @@ const Projects = () => {
     if (activeIndex !== index) {
       setActiveIndex(index);
     } else {
-      // If it is the active center card, open it in the lightbox!
-      setSelectedProject(projectsData[index]);
+      // If it is the active center card, open it in the fullscreen gallery!
+      setLightboxIndex(index);
     }
   };
 
@@ -296,17 +306,48 @@ const Projects = () => {
         </p>
       </div>
 
-      {/* Lightbox Preview */}
-      {selectedProject && (
-        <div className="lightbox-overlay" onClick={() => setSelectedProject(null)}>
-          <button className="lightbox-close" onClick={() => setSelectedProject(null)}>×</button>
+      {/* Gallery-Style Fullscreen Image Viewer */}
+      {lightboxIndex !== null && (
+        <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)}>
+          {/* Close Button */}
+          <button 
+            className="lightbox-close" 
+            onClick={() => setLightboxIndex(null)} 
+            aria-label="Close Gallery"
+          >
+            ×
+          </button>
+          
+          {/* Left Arrow */}
+          <button 
+            className="lightbox-nav-btn prev-btn" 
+            onClick={handleLightboxPrev} 
+            aria-label="Previous Image"
+          >
+            ‹
+          </button>
+          
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img src={selectedProject.img} alt={selectedProject.title} className="lightbox-image" />
+            <img 
+              src={projectsData[lightboxIndex].img} 
+              alt={projectsData[lightboxIndex].title} 
+              className="lightbox-image" 
+            />
+            
             <div className="lightbox-caption">
-              <h3>{selectedProject.title}</h3>
-              {selectedProject.description && <p>{selectedProject.description}</p>}
+              <h3>{projectsData[lightboxIndex].title}</h3>
+              {projectsData[lightboxIndex].description && <p>{projectsData[lightboxIndex].description}</p>}
             </div>
           </div>
+          
+          {/* Right Arrow */}
+          <button 
+            className="lightbox-nav-btn next-btn" 
+            onClick={handleLightboxNext} 
+            aria-label="Next Image"
+          >
+            ›
+          </button>
         </div>
       )}
     </section>
