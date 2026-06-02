@@ -26,13 +26,14 @@ const Commercial = () => {
 
   return (
     <main className="project-detail-page">
-      {/* Header */}
-      <section className="project-page-header">
-        <div className="pp-header-content">
-          <h1>Commercial Construction</h1>
-          <p>Delivering robust, scalable, and modern workspaces built for business growth.</p>
-        </div>
-      </section>
+      {/* Header Banner */}
+      <div className="project-page-banner-container">
+        <img 
+          src="/images/luxury_commercial.jpg" 
+          alt="Premium Commercial Construction" 
+          className="project-page-banner-img" 
+        />
+      </div>
 
 
 
