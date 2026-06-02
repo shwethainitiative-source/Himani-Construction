@@ -16,6 +16,7 @@
 
 .projects-title {
   color: var(--color-dark-brown);
+  font-family: 'Inter', 'Outfit', sans-serif;
   font-size: 40px;
   font-weight: 800;
   line-height: 1.2;
@@ -165,6 +166,7 @@
 
 .coverflow-text-overlay h3 {
   color: var(--color-white);
+  font-family: 'Inter', 'Outfit', sans-serif;
   font-size: 1.6rem;
   margin: 0;
   opacity: 0;
@@ -308,6 +310,7 @@
 }
 
 .lightbox-caption h3 {
+  font-family: 'Inter', 'Outfit', sans-serif;
   font-size: 1.6rem;
   color: var(--color-yellow);
   margin-bottom: 8px;
