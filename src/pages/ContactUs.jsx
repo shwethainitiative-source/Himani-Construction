@@ -128,7 +128,26 @@ const ContactUs = () => {
                 <div className="info-icon">📍</div>
                 <div className="info-details">
                   <h4>Head Office</h4>
-                  <p>123 Construction Avenue<br />Tech Park Phase 2<br />Bengaluru, Karnataka 560001</p>
+                  <p>106, 4th Cross, 6th Main,<br />Balaji Layout / Bhadrappa Layout,<br />Bangalore - 560094</p>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">🏢</div>
+                <div className="info-details">
+                  <h4>Branches</h4>
+                  <p style={{ margin: 0, padding: 0 }}>
+                    <strong>Sagar:</strong><br />
+                    First Floor, New Private Bus Stand Complex, Sagar, Shimoga District.
+                  </p>
+                  <p style={{ marginTop: '15px' }}>
+                    <strong>Sorab:</strong><br />
+                    Main Road, Bhushan Jeweller Complex, Sorab.
+                  </p>
+                  <p style={{ marginTop: '15px' }}>
+                    <strong>Mangalore:</strong><br />
+                    A.A. Pais Building, 1st Floor, Next to Kavita Residency, Urva Store, Mangalore.
+                  </p>
                 </div>
               </div>
 

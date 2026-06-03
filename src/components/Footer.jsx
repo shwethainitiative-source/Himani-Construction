@@ -52,7 +52,12 @@ const Footer = () => {
         <div className="footer-col">
           <h4 className="footer-heading">Contact Details</h4>
           <ul className="footer-links">
-            <li>Bengaluru Himanai</li>
+            <li style={{ color: 'var(--color-white)', fontWeight: '600' }}>Head Office:</li>
+            <li style={{ lineHeight: '1.5' }}>
+              106, 4th Cross, 6th Main,<br />
+              Balaji Layout / Bhadrappa Layout,<br />
+              Bangalore - 560094
+            </li>
             <li>Phone: +91 70192 45628, +91 86604 59395</li>
             <li>Email: himaniconstructionsandinterior@gmail.com</li>
           </ul>
