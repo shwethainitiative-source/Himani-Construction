@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ContactUs.css';
+import { MapPin, Building2, Phone, Mail } from 'lucide-react';
+
 
 const ContactUs = () => {
   const { hash } = useLocation();
@@ -125,7 +127,9 @@ const ContactUs = () => {
               <p className="contact-subtext">Fill in the form to start a conversation, or use the contact information below.</p>
 
               <div className="info-item">
-                <div className="info-icon">📍</div>
+                <div className="info-icon">
+                  <MapPin size={20} />
+                </div>
                 <div className="info-details">
                   <h4>Head Office</h4>
                   <p>106, 4th Cross, 6th Main,<br />Balaji Layout / Bhadrappa Layout,<br />Bangalore - 560094</p>
@@ -133,7 +137,9 @@ const ContactUs = () => {
               </div>
 
               <div className="info-item">
-                <div className="info-icon">🏢</div>
+                <div className="info-icon">
+                  <Building2 size={20} />
+                </div>
                 <div className="info-details">
                   <h4>Branches</h4>
                   <p style={{ margin: 0, padding: 0 }}>
@@ -152,7 +158,9 @@ const ContactUs = () => {
               </div>
 
               <div className="info-item">
-                <div className="info-icon">📞</div>
+                <div className="info-icon">
+                  <Phone size={20} />
+                </div>
                 <div className="info-details">
                   <h4>Phone</h4>
                   <p>7019245628<br />8660459395</p>
@@ -160,7 +168,9 @@ const ContactUs = () => {
               </div>
 
               <div className="info-item">
-                <div className="info-icon">✉️</div>
+                <div className="info-icon">
+                  <Mail size={20} />
+                </div>
                 <div className="info-details">
                   <h4>Email</h4>
                   <p>himaniconstruction@gmail.com<br /></p>
