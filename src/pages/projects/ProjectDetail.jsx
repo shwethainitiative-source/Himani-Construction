@@ -108,7 +108,6 @@ const ProjectDetail = () => {
           <span className="dot">•</span>
           <span className="project-date-meta">Completed: {project.date}</span>
         </div>
-        <h1 className="project-title">{project.title}</h1>
       </header>
 
       {/* Project Hero Image */}
