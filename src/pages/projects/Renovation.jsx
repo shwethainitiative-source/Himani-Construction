@@ -28,7 +28,7 @@ const Renovation = () => {
       {/* Header Banner */}
       <div className="project-page-banner-container">
         <img 
-          src="/images/luxury_renovation.jpg" 
+          src="/images/luxury_renovation.png" 
           alt="Quality-Driven Renovation & Remodeling" 
           className="project-page-banner-img" 
         />
