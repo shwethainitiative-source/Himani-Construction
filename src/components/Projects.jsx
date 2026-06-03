@@ -76,7 +76,7 @@ const Projects = () => {
 
   // Automatic transition every 2 seconds (resets timer if activeIndex or pause state changes)
   useEffect(() => {
-    if (projectsData.length <= 1 || isPaused || lightboxIndex !== null) return;
+    if (projectsData.length <= 1 || isPaused) return;
 
     const timer = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
