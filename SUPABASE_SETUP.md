@@ -133,7 +133,7 @@ INSERT INTO public.blogs (title, category, description, date, img, featured) VAL
 To log in securely as the administrator:
 1. Go to the **Authentication** section in your Supabase Dashboard.
 2. Click **Add User** -> **Create User**.
-3. Enter the required admin email: `himaniconstructionsandinterior@gmail.com`
+3. Enter the required admin email: `himaniconstruction@gmail.com`
 4. Enter the password: `Himani@2026`
 5. Click **Save**.
 6. (Ensure the user's email is confirmed or manually confirm it in the Dashboard so it is active immediately.)

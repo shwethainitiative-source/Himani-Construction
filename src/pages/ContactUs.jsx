@@ -48,7 +48,7 @@ const ContactUs = () => {
     setSubmitStatus({ type: '', message: '' });
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/himaniconstructionsandinterior@gmail.com', {
+      const response = await fetch('https://formsubmit.co/ajax/himaniconstruction@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ const ContactUs = () => {
                 <div className="info-icon">✉️</div>
                 <div className="info-details">
                   <h4>Email</h4>
-                  <p>himaniconstructionsandinterior@gmail.com<br /></p>
+                  <p>himaniconstruction@gmail.com<br /></p>
                 </div>
               </div>
             </div>

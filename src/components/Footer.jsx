@@ -59,7 +59,7 @@ const Footer = () => {
               Bangalore - 560094
             </li>
             <li>Phone: +91 70192 45628, +91 86604 59395</li>
-            <li>Email: himaniconstructionsandinterior@gmail.com</li>
+            <li>Email: himaniconstruction@gmail.com</li>
           </ul>
         </div>
       </div>

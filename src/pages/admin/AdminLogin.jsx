@@ -58,7 +58,7 @@ const AdminLogin = () => {
             <input
               type="email"
               id="email"
-              placeholder="himaniconstructionsandinterior@gmail.com"
+              placeholder="himaniconstruction@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -100,7 +100,7 @@ const AdminLogin = () => {
             </p>
             <div className="hint-box">
               <strong>Authorized Administrator Email:</strong><br />
-              <code>himaniconstructionsandinterior@gmail.com</code><br /><br />
+              <code>himaniconstruction@gmail.com</code><br /><br />
               <strong>Password Reset Hint:</strong><br />
               <em>Use your default configured credential: <strong>Himani@2026</strong></em>
             </div>
