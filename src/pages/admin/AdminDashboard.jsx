@@ -37,8 +37,10 @@ const AdminDashboard = () => {
     title: '',
     category: 'residential',
     description: '',
+    location: '',
     date: new Date().toISOString().split('T')[0],
-    img: ''
+    img: '',
+    featured: false
   });
 
   // Modal / Form state for Blogs
@@ -214,6 +216,7 @@ const AdminDashboard = () => {
       title: '',
       category: 'residential',
       description: '',
+      location: '',
       date: new Date().toISOString().split('T')[0],
       img: '',
       featured: false
@@ -228,6 +231,7 @@ const AdminDashboard = () => {
       title: proj.title,
       category: proj.category,
       description: proj.description,
+      location: proj.location || '',
       date: proj.date,
       img: proj.img,
       featured: proj.featured || false
@@ -237,8 +241,8 @@ const AdminDashboard = () => {
 
   const handleProjSubmit = async (e) => {
     e.preventDefault();
-    if (!projForm.title || !projForm.description || (!projForm.img && !projFile)) {
-      alert('Please fill out all project fields including selecting or pasting an image.');
+    if (!projForm.title || !projForm.description || !projForm.location || (!projForm.img && !projFile)) {
+      alert('Please fill out all project fields including selecting or pasting an image and location.');
       return;
     }
 
@@ -565,7 +569,7 @@ const AdminDashboard = () => {
                       </div>
                       <div className="item-card-body">
                         <h3>{proj.title}</h3>
-                        <p className="item-card-date">📅 {proj.date}</p>
+                        <p className="item-card-date">📅 {proj.date} {proj.location && `• 📍 ${proj.location}`}</p>
                         <p className="item-card-desc">{proj.description}</p>
                       </div>
                       <div className="item-card-actions">
@@ -800,6 +804,17 @@ const AdminDashboard = () => {
                     required
                   />
                 </div>
+              </div>
+
+              <div className="form-group">
+                <label>Project Location / Place Name</label>
+                <input 
+                  type="text" 
+                  value={projForm.location}
+                  onChange={e => setProjForm({...projForm, location: e.target.value})}
+                  placeholder="e.g. Bangalore, Chandigarh, or Mohali"
+                  required
+                />
               </div>
 
               <div className="form-group">

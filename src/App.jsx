@@ -14,6 +14,7 @@ import Residential from './pages/projects/Residential';
 import Commercial from './pages/projects/Commercial';
 import Interior from './pages/projects/Interior';
 import Renovation from './pages/projects/Renovation';
+import ProjectDetail from './pages/projects/ProjectDetail';
 
 // Admin Pages & Guards
 import AdminLogin from './pages/admin/AdminLogin';
@@ -38,6 +39,7 @@ function App() {
         <Route path="/projects/commercial" element={<Commercial />} />
         <Route path="/projects/interior" element={<Interior />} />
         <Route path="/projects/renovation" element={<Renovation />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
         
         {/* Admin Portal Routes */}
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />

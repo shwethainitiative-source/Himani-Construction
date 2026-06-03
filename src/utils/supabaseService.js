@@ -93,6 +93,20 @@ export const supabaseService = {
     return data;
   },
 
+  getProject: async (id) => {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error(`Error loading project ${id} from Supabase:`, error.message);
+      return null;
+    }
+    return data;
+  },
+
   addProject: async (projectData, file) => {
     let imgUrl = projectData.img;
     if (file) {
@@ -103,6 +117,7 @@ export const supabaseService = {
       title: projectData.title,
       category: projectData.category,
       description: projectData.description,
+      location: projectData.location || '',
       date: projectData.date,
       img: imgUrl,
       featured: projectData.featured || false
@@ -115,15 +130,41 @@ export const supabaseService = {
         .select();
 
       if (error) {
-        // Safe self-healing retry if DB doesn't have the 'featured' column yet
-        if (error.message.includes('column "featured" does not exist') || error.code === '42703') {
-          console.warn("Supabase 'projects' table is missing 'featured' column. Retrying without it...");
-          delete payload.featured;
+        // Safe self-healing retry if DB doesn't have the 'featured' or 'location' column yet
+        if (error.code === '42703') {
+          console.warn("Supabase 'projects' table is missing columns. Checking and retrying...");
+          const errMsg = error.message.toLowerCase();
+          if (errMsg.includes('location')) {
+            delete payload.location;
+          }
+          if (errMsg.includes('featured')) {
+            delete payload.featured;
+          }
+          
           const { data: retryData, error: retryError } = await supabase
             .from('projects')
             .insert([payload])
             .select();
-          if (retryError) throw new Error(retryError.message);
+
+          if (retryError) {
+            // Second step retry
+            if (retryError.code === '42703') {
+              const retryErrMsg = retryError.message.toLowerCase();
+              if (retryErrMsg.includes('location')) {
+                delete payload.location;
+              }
+              if (retryErrMsg.includes('featured')) {
+                delete payload.featured;
+              }
+              const { data: finalData, error: finalError } = await supabase
+                .from('projects')
+                .insert([payload])
+                .select();
+              if (finalError) throw new Error(finalError.message);
+              return finalData[0];
+            }
+            throw new Error(retryError.message);
+          }
           return retryData[0];
         }
         throw new Error(error.message);
@@ -148,6 +189,7 @@ export const supabaseService = {
       title: projectData.title,
       category: projectData.category,
       description: projectData.description,
+      location: projectData.location || '',
       date: projectData.date,
       img: imgUrl,
       featured: projectData.featured || false
@@ -161,16 +203,43 @@ export const supabaseService = {
         .select();
 
       if (error) {
-        // Safe self-healing retry if DB doesn't have the 'featured' column yet
-        if (error.message.includes('column "featured" does not exist') || error.code === '42703') {
-          console.warn("Supabase 'projects' table is missing 'featured' column. Retrying without it...");
-          delete payload.featured;
+        // Safe self-healing retry if DB doesn't have the 'featured' or 'location' column yet
+        if (error.code === '42703') {
+          console.warn("Supabase 'projects' table is missing columns. Checking and retrying...");
+          const errMsg = error.message.toLowerCase();
+          if (errMsg.includes('location')) {
+            delete payload.location;
+          }
+          if (errMsg.includes('featured')) {
+            delete payload.featured;
+          }
+          
           const { data: retryData, error: retryError } = await supabase
             .from('projects')
             .update(payload)
             .eq('id', id)
             .select();
-          if (retryError) throw new Error(retryError.message);
+
+          if (retryError) {
+            // Second step retry
+            if (retryError.code === '42703') {
+              const retryErrMsg = retryError.message.toLowerCase();
+              if (retryErrMsg.includes('location')) {
+                delete payload.location;
+              }
+              if (retryErrMsg.includes('featured')) {
+                delete payload.featured;
+              }
+              const { data: finalData, error: finalError } = await supabase
+                .from('projects')
+                .update(payload)
+                .eq('id', id)
+                .select();
+              if (finalError) throw new Error(finalError.message);
+              return finalData[0];
+            }
+            throw new Error(retryError.message);
+          }
           return retryData[0];
         }
         throw new Error(error.message);

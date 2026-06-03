@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabaseService } from '../utils/supabaseService';
 import './Projects.css';
 
 const Projects = () => {
+  const navigate = useNavigate();
   const [projectsData, setProjectsData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [dragStartX, setDragStartX] = useState(null);
-  const [lightboxIndex, setLightboxIndex] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [entranceFinished, setEntranceFinished] = useState(false);
@@ -82,7 +83,7 @@ const Projects = () => {
     }, 2000);
 
     return () => clearInterval(timer);
-  }, [projectsData.length, isPaused, lightboxIndex, activeIndex]);
+  }, [projectsData.length, isPaused, activeIndex]);
 
   const handlePrev = () => {
     if (projectsData.length === 0) return;
@@ -92,16 +93,6 @@ const Projects = () => {
   const handleNext = () => {
     if (projectsData.length === 0) return;
     setActiveIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
-  };
-
-  const handleLightboxPrev = (e) => {
-    e.stopPropagation();
-    setLightboxIndex((prevIdx) => (prevIdx - 1 + projectsData.length) % projectsData.length);
-  };
-
-  const handleLightboxNext = (e) => {
-    e.stopPropagation();
-    setLightboxIndex((prevIdx) => (prevIdx + 1) % projectsData.length);
   };
 
   const handleDragStart = (e) => {
@@ -139,8 +130,8 @@ const Projects = () => {
     if (activeIndex !== index) {
       setActiveIndex(index);
     } else {
-      // If it is the active center card, open it in the fullscreen gallery!
-      setLightboxIndex(index);
+      // Navigate to the project details page
+      navigate(`/project/${projectsData[index].id}`);
     }
   };
 
@@ -312,54 +303,9 @@ const Projects = () => {
       
       <div className="container" style={{ marginTop: '30px' }}>
         <p style={{ color: 'var(--color-dark-brown)', opacity: 0.6, fontSize: '0.9rem' }}>
-          ← Swipe, use arrows, or click dots to explore (click center card to enlarge) →
+          ← Swipe, use arrows, or click dots to explore (click center card to view details) →
         </p>
       </div>
-
-      {/* Gallery-Style Fullscreen Image Viewer */}
-      {lightboxIndex !== null && (
-        <div className="lightbox-overlay" onClick={() => setLightboxIndex(null)}>
-          {/* Close Button */}
-          <button 
-            className="lightbox-close" 
-            onClick={() => setLightboxIndex(null)} 
-            aria-label="Close Gallery"
-          >
-            ×
-          </button>
-          
-          {/* Left Arrow */}
-          <button 
-            className="lightbox-nav-btn prev-btn" 
-            onClick={handleLightboxPrev} 
-            aria-label="Previous Image"
-          >
-            ‹
-          </button>
-          
-          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={projectsData[lightboxIndex].img} 
-              alt={projectsData[lightboxIndex].title} 
-              className="lightbox-image" 
-            />
-            
-            <div className="lightbox-caption">
-              <h3>{projectsData[lightboxIndex].title}</h3>
-              {projectsData[lightboxIndex].description && <p>{projectsData[lightboxIndex].description}</p>}
-            </div>
-          </div>
-          
-          {/* Right Arrow */}
-          <button 
-            className="lightbox-nav-btn next-btn" 
-            onClick={handleLightboxNext} 
-            aria-label="Next Image"
-          >
-            ›
-          </button>
-        </div>
-      )}
     </section>
   );
 };

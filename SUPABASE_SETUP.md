@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
     title text NOT NULL,
     category text NOT NULL, -- residential, commercial, interior, renovation
     description text NOT NULL,
+    location text, -- Project location/place name
     date date DEFAULT CURRENT_DATE NOT NULL,
     img text NOT NULL,
     featured boolean DEFAULT false NOT NULL -- Used to manage & select max 10 slider projects on the Homepage
@@ -76,10 +77,11 @@ WITH CHECK (true);
 ```
 
 ### Existing Database Migration Note (Important)
-If you have already created the `projects` table previously, run the following SQL command in your **Supabase SQL Editor** to add the `featured` column without losing any existing project records:
+If you have already created the `projects` table previously, run the following SQL commands in your **Supabase SQL Editor** to add the `featured` and `location` columns without losing any existing project records:
 
 ```sql
 ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS featured boolean DEFAULT false NOT NULL;
+ALTER TABLE public.projects ADD COLUMN IF NOT EXISTS location text;
 ```
 
 ---
