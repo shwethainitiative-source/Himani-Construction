@@ -264,13 +264,9 @@ const Projects = () => {
                       style={{ opacity: isCenter ? 0 : absOffset * 0.4 }}
                     />
                     
-                    {/* Text overlay only fully visible on active center card */}
-                    <div className="coverflow-text-overlay" style={{ opacity: isCenter ? 1 : 0 }}>
+                    {/* Clean and minimal project title at bottom-left */}
+                    <div className="coverflow-title-overlay" style={{ opacity: isCenter ? 1 : 0.5 }}>
                       <h3>{project.title}</h3>
-                      {project.description && (
-                        <p className="coverflow-card-desc">{project.description}</p>
-                      )}
-                      <span className="coverflow-card-cta">View Details →</span>
                     </div>
                   </div>
                 </div>
