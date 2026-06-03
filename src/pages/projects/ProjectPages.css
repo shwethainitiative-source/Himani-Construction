@@ -316,9 +316,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  /* Premium rendering adjustments to maximize image clarity and sharpness */
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }

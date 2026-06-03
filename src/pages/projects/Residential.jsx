@@ -29,7 +29,7 @@ const Residential = () => {
       {/* Header Banner */}
       <div className="project-page-banner-container">
         <img 
-          src="/images/luxury_residential.jpg" 
+          src="/images/luxury_residential.jpeg" 
           alt="Luxury Residential Construction" 
           className="project-page-banner-img" 
         />

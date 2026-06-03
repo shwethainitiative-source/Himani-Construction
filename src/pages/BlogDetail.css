@@ -149,8 +149,6 @@
   max-height: 550px;
   object-fit: cover;
   display: block;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
   transform: translateZ(0);
 }
 
