@@ -24,7 +24,7 @@ const ContactUs = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // basic validation
     if (!formData.fname.trim() || !formData.email.trim() || !formData.message.trim()) {
       setSubmitStatus({
@@ -155,7 +155,7 @@ const ContactUs = () => {
                 <div className="info-icon">📞</div>
                 <div className="info-details">
                   <h4>Phone</h4>
-                  <p>+91 70192 45628<br />+91 86604 59395</p>
+                  <p>7019245628<br />8660459395</p>
                 </div>
               </div>
 

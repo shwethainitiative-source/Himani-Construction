@@ -2,6 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabaseService } from '../../utils/supabaseService';
 import './AdminDashboard.css';
+import { 
+  LayoutDashboard, 
+  Briefcase, 
+  FileText, 
+  Sliders, 
+  LogOut, 
+  TrendingUp, 
+  Plus, 
+  Edit, 
+  Trash2, 
+  ExternalLink,
+  Save
+} from 'lucide-react';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -418,25 +431,29 @@ const AdminDashboard = () => {
             className={`nav-tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
             onClick={() => setActiveTab('overview')}
           >
-            📊 System Overview
+            <LayoutDashboard size={16} />
+            <span>System Overview</span>
           </button>
           <button 
             className={`nav-tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
             onClick={() => setActiveTab('projects')}
           >
-            🏗️ Manage Projects
+            <Briefcase size={16} />
+            <span>Manage Projects</span>
           </button>
           <button 
             className={`nav-tab-btn ${activeTab === 'blogs' ? 'active' : ''}`}
             onClick={() => setActiveTab('blogs')}
           >
-            ✍️ Manage Blogs
+            <FileText size={16} />
+            <span>Manage Blogs</span>
           </button>
           <button 
             className={`nav-tab-btn ${activeTab === 'hero' ? 'active' : ''}`}
             onClick={() => setActiveTab('hero')}
           >
-            🖼️ Manage Hero Slider
+            <Sliders size={16} />
+            <span>Manage Hero Slider</span>
           </button>
         </nav>
 
@@ -448,7 +465,8 @@ const AdminDashboard = () => {
             </div>
           </div>
           <button onClick={handleLogout} className="logout-btn">
-            🚪 Secure Log Out
+            <LogOut size={14} />
+            <span>Secure Log Out</span>
           </button>
         </div>
       </aside>
@@ -477,30 +495,39 @@ const AdminDashboard = () => {
         <header className="dashboard-header">
           <h1>Admin Dashboard</h1>
           <div className="live-site-link">
-            <a href="/" target="_blank" rel="noopener noreferrer">🌐 Visit Live Website →</a>
+            <a href="/" target="_blank" rel="noopener noreferrer">
+              <span>Visit Live Website</span>
+              <ExternalLink size={14} style={{ marginLeft: '6px' }} />
+            </a>
           </div>
         </header>
 
         {/* Stats Grid */}
         <section className="stats-grid">
-          <div className="stat-card gold">
-            <div className="stat-icon">🏗️</div>
+          <div className="stat-card">
+            <div className="stat-icon-wrapper">
+              <Briefcase size={20} />
+            </div>
             <div className="stat-details">
               <h3>Total Projects</h3>
               <p className="stat-number">{stats.totalProjects}</p>
             </div>
           </div>
 
-          <div className="stat-card brown">
-            <div className="stat-icon">✍️</div>
+          <div className="stat-card">
+            <div className="stat-icon-wrapper">
+              <FileText size={20} />
+            </div>
             <div className="stat-details">
               <h3>Total Blogs</h3>
               <p className="stat-number">{stats.totalBlogs}</p>
             </div>
           </div>
 
-          <div className="stat-card sky">
-            <div className="stat-icon">📈</div>
+          <div className="stat-card">
+            <div className="stat-icon-wrapper">
+              <TrendingUp size={20} />
+            </div>
             <div className="stat-details">
               <h3>Recent (30 Days)</h3>
               <p className="stat-number">{stats.recentCount}</p>
@@ -552,7 +579,8 @@ const AdminDashboard = () => {
                   <p className="tab-description">Add, update, or remove construction & interior projects securely synchronized in cloud tables.</p>
                 </div>
                 <button onClick={handleOpenProjAdd} className="btn-add-new">
-                  ➕ Add New Project
+                  <Plus size={16} />
+                  <span>Add New Project</span>
                 </button>
               </div>
 
@@ -574,10 +602,12 @@ const AdminDashboard = () => {
                       </div>
                       <div className="item-card-actions">
                         <button onClick={() => handleOpenProjEdit(proj)} className="btn-edit">
-                          ✏️ Edit
+                          <Edit size={14} />
+                          <span>Edit</span>
                         </button>
                         <button onClick={() => handleProjDelete(proj.id, proj.img)} className="btn-delete">
-                          🗑️ Delete
+                          <Trash2 size={14} />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </div>
@@ -596,7 +626,8 @@ const AdminDashboard = () => {
                   <p className="tab-description">Manage educational news, tips, and insights for site readers securely synchronized in cloud tables.</p>
                 </div>
                 <button onClick={handleOpenBlogAdd} className="btn-add-new">
-                  ➕ Add New Blog Post
+                  <Plus size={16} />
+                  <span>Add New Blog Post</span>
                 </button>
               </div>
 
@@ -618,10 +649,12 @@ const AdminDashboard = () => {
                       </div>
                       <div className="item-card-actions">
                         <button onClick={() => handleOpenBlogEdit(blog)} className="btn-edit">
-                          ✏️ Edit
+                          <Edit size={14} />
+                          <span>Edit</span>
                         </button>
                         <button onClick={() => handleBlogDelete(blog.id, blog.img)} className="btn-delete">
-                          🗑️ Delete
+                          <Trash2 size={14} />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </div>
@@ -751,7 +784,8 @@ const AdminDashboard = () => {
                           className="btn-save-hero-slot"
                           disabled={actionLoading}
                         >
-                          💾 Save Media Slot {slotNum}
+                          <Save size={16} />
+                          <span>Save Media Slot {slotNum}</span>
                         </button>
                       </form>
                     </div>
@@ -768,7 +802,7 @@ const AdminDashboard = () => {
       {showProjModal && (
         <div className="modal-overlay">
           <div className="modal-card">
-            <h3>{editingProj ? '✏️ Edit Project' : '🏗️ Create New Project'}</h3>
+            <h3>{editingProj ? 'Edit Project' : 'Create New Project'}</h3>
             <form onSubmit={handleProjSubmit} className="modal-form">
               <div className="form-group">
                 <label>Project Title</label>
@@ -889,7 +923,7 @@ const AdminDashboard = () => {
       {showBlogModal && (
         <div className="modal-overlay">
           <div className="modal-card">
-            <h3>{editingBlog ? '✏️ Edit Blog Post' : '✍️ Create New Blog Post'}</h3>
+            <h3>{editingBlog ? 'Edit Blog Post' : 'Create New Blog Post'}</h3>
             <form onSubmit={handleBlogSubmit} className="modal-form">
               <div className="form-group">
                 <label>Article Title</label>
