@@ -150,41 +150,8 @@ const ProjectDetail = () => {
               </li>
             </ul>
           </div>
-
-          <div className="sidebar-cta-card">
-            <h3>Interested in a similar project?</h3>
-            <p>Our experienced engineering and design teams are ready to bring your construction vision to reality.</p>
-            <Link to="/contact" className="cta-button-sidebar">Get a Free Quote</Link>
-          </div>
         </aside>
       </div>
-
-      {/* Related Portfolio Grid */}
-      {relatedProjects.length > 0 && (
-        <section className="related-projects">
-          <div className="container">
-            <h2 className="related-title">Other Featured Work</h2>
-            <div className="related-grid">
-              {relatedProjects.map((proj) => (
-                <Link to={`/project/${proj.id}`} className="related-card" key={proj.id}>
-                  <div 
-                    className="related-card-img" 
-                    style={{ backgroundImage: `url(${proj.img})` }}
-                  >
-                    <span className="related-card-loc">
-                      {proj.location || 'View Detail'}
-                    </span>
-                  </div>
-                  <div className="related-card-content">
-                    <h3>{proj.title}</h3>
-                    <span className="read-more-link">View Portfolio →</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   );
 };
