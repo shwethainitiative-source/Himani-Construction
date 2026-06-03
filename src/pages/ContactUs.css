@@ -261,3 +261,46 @@ textarea.form-control {
   transform: none;
 }
 
+/* Contact Social Media Styles */
+.contact-social-wrapper {
+  margin-top: 20px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.contact-social-wrapper h4 {
+  font-size: 1.1rem;
+  color: var(--color-dark-brown);
+  margin-bottom: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.contact-social-icon {
+  background-color: var(--color-white);
+  color: var(--color-sky-blue);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #f0f0f0;
+}
+
+.contact-social-icon:hover {
+  background-color: var(--color-sky-blue);
+  color: var(--color-white);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(2, 89, 129, 0.2);
+  border-color: var(--color-sky-blue);
+}
+

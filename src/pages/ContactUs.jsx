@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ContactUs.css';
-import { MapPin, Building2, Phone, Mail } from 'lucide-react';
+import { MapPin, Building2, Phone, Mail, Facebook, Instagram } from 'lucide-react';
 
 
 const ContactUs = () => {
@@ -174,6 +174,18 @@ const ContactUs = () => {
                 <div className="info-details">
                   <h4>Email</h4>
                   <p>himaniconstruction@gmail.com<br /></p>
+                </div>
+              </div>
+
+              <div className="contact-social-wrapper">
+                <h4>Follow Us</h4>
+                <div className="contact-social-icons">
+                  <a href="https://www.facebook.com/share/1NviWYgbKa/" target="_blank" rel="noopener noreferrer" className="contact-social-icon" aria-label="Facebook">
+                    <Facebook size={20} />
+                  </a>
+                  <a href="https://www.instagram.com/ashok_6387?utm_source=qr&igsh=azh1a3FrejQ4b2Jw" target="_blank" rel="noopener noreferrer" className="contact-social-icon" aria-label="Instagram">
+                    <Instagram size={20} />
+                  </a>
                 </div>
               </div>
             </div>
