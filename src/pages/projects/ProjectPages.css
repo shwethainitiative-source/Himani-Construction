@@ -304,3 +304,17 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+
+/* Category Page Main Wrapper (removes top padding to align banner with header) */
+.project-category-page {
+  padding: 0 0 100px;
+  background-color: var(--color-light-gray, #fcfcfc);
+  font-family: 'Poppins', sans-serif;
+  color: var(--color-dark-brown, #371a10);
+}
+
+@media (max-width: 768px) {
+  .project-category-page {
+    padding: 0 0 60px;
+  }
+}

@@ -24,7 +24,7 @@ const Commercial = () => {
   }, []);
 
   return (
-    <main className="project-detail-page">
+    <main className="project-category-page">
       {/* Header Banner */}
       <div className="project-page-banner-container">
         <img 
