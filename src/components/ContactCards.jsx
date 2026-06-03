@@ -25,7 +25,7 @@ const ContactCards = () => {
         <div className="contact-card">
           <Mail className="contact-icon" size={40} />
           <h3 className="contact-title">Email</h3>
-          <p className="contact-detail">himaniconstruction<br />@gmail.com</p>
+          <p className="contact-detail">himaniconstruction@gmail.com</p>
         </div>
       </div>
     </section>
