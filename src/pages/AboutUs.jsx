@@ -1,4 +1,5 @@
 import React from 'react';
+import { Target, Eye } from 'lucide-react';
 import './AboutUs.css';
 
 const AboutUs = () => {
@@ -28,15 +29,23 @@ const AboutUs = () => {
       {/* Mission & Vision */}
       <section className="mission-vision">
         <div className="container mv-container">
-          <div className="mv-card mission-card">
+          <div className="mv-card">
+            <div className="mv-icon-wrapper">
+              <Target size={28} />
+            </div>
             <h3>Our Mission</h3>
             <p>
-              To provide quality workmanship and customer service and maintain the highest level of professionalism, honesty and fairness in our relationships with our customers, employees and vendors.            </p>
+              To provide quality workmanship and customer service and maintain the highest level of professionalism, honesty and fairness in our relationships with our customers, employees and vendors.
+            </p>
           </div>
-          <div className="mv-card vision-card">
+          <div className="mv-card">
+            <div className="mv-icon-wrapper">
+              <Eye size={28} />
+            </div>
             <h3>Our Vision</h3>
             <p>
-              To become most trusted in construction by providing our services in the maximum and proper Environmental, health and safety and Quality level to gain our customer satisfaction. A company that our customers want to work with and our employees are proud to work for.            </p>
+              To become most trusted in construction by providing our services in the maximum and proper Environmental, health and safety and Quality level to gain our customer satisfaction. A company that our customers want to work with and our employees are proud to work for.
+            </p>
           </div>
         </div>
       </section>
