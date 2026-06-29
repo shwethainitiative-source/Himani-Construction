@@ -9,7 +9,7 @@ const AboutUs = () => {
       <section className="page-header">
         <div className="container">
           <h1>About Himani Construction</h1>
-          <p>Building Trust, Delivering Excellence Since 2010</p>
+          <p>Building Trust, Delivering Excellence Since 1998</p>
         </div>
       </section>
 
@@ -19,7 +19,7 @@ const AboutUs = () => {
           <div className="story-content">
             <h2>Our Story</h2>
             <p>
-              Since first opened in 2008, Himani Construction and Interiors has earned a reputation for integrity, quality, service and attention. Our growth from local builder into one of the most reputed construction company, is a reflection of the strong relationships we have forged over the years and our personalized approach to client service.            </p>
+              Since first opened in 1998, Himani Construction and Interiors has earned a reputation for integrity, quality, service and attention. Our growth from local builder into one of the most reputed construction company, is a reflection of the strong relationships we have forged over the years and our personalized approach to client service.            </p>
             <p>
               With more than 22 years of serving Industrial, Commercial, Institutional and Residential buildings, We are also engaged in providing various construction services like Interior work, rain water harvesting, water proofing etc. we are proud that much of our business continues to come from repeat customers and client referrals. Regardless of the size or nature of each construction project, Himani Construction is committed to generating personalized, innovative, quality-driven solutions that reflect customer expectations and deliver superior outcome to them. At Himani Construction, our approach is simple, we aim to build and develop more than just great properties. We want to create lasting relationships. To us, every new project is an opportunity to build new bonds and reinforce relationships. We may work most often with concrete, steel and glass, yet our best work is derived of confidence, quality and pride in the work we do and those we work with.            </p>
           </div>
